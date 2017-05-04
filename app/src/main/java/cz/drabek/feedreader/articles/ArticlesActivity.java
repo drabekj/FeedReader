@@ -1,7 +1,9 @@
-package cz.drabek.feedreader;
+package cz.drabek.feedreader.articles;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import cz.drabek.feedreader.R;
 
 public class ArticlesActivity extends AppCompatActivity {
 
