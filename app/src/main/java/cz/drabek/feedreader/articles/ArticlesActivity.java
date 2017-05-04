@@ -7,11 +7,14 @@ import android.util.Log;
 import android.view.Menu;
 
 import cz.drabek.feedreader.R;
+import cz.drabek.feedreader.data.source.ArticlesDataSource;
+import cz.drabek.feedreader.data.source.ArticlesRepository;
+import cz.drabek.feedreader.data.source.local.StaticArticlesDataSource;
 import cz.drabek.feedreader.util.ActivityUtils;
 
 public class ArticlesActivity extends AppCompatActivity {
 
-
+    private ArticlesPresenter mArticlesPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,10 @@ public class ArticlesActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), articlesFragment, R.id.contentFrame);
         }
 
-
+        // Create mock static Data
+        ArticlesRepository mockData = new ArticlesRepository();
+        // Create the presenter
+        mArticlesPresenter = new ArticlesPresenter(mockData, articlesFragment);
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.
