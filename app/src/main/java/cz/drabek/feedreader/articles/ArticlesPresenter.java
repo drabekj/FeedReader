@@ -55,7 +55,7 @@ public class ArticlesPresenter implements
         mArticlesRepository.getArticles(this);
     }
 
-    // TODO Why do i need to restart loader?
+    // TODO Why do I need to restart loader?
     /**
      * Articles saved to local storage.
      *

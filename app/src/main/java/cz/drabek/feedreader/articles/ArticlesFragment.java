@@ -110,7 +110,6 @@ public class ArticlesFragment extends Fragment
         mNoArticlesView.setVisibility(View.VISIBLE);
     }
 
-    // TODO setLoadingIndicator
     @Override
     public void setLoadingIndicator(boolean active) {
         if (getView() == null)
