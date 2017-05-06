@@ -58,7 +58,7 @@ public class ArticlesRepository implements ArticlesDataSource {
                 refreshLocalDataStorage(articles);
 
                 // SHOW in view (don't need if using CP + Loader)
-                callback.onArticlesLoaded(articles);
+                callback.onArticlesLoaded(null);
             }
 
             @Override

@@ -41,10 +41,6 @@ public class ArticlesPresenter implements
      */
     @Override
     public void onArticlesLoaded(List<Article> articles) {
-        for (Article a: articles)
-            Log.d("Mock Data", "onArticlesLoaded: " + a);
-
-
 
         // TODO trigger loader to refresh data from local storage
     }
