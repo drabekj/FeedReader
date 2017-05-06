@@ -3,9 +3,11 @@ package cz.drabek.feedreader.data.source.local;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.source.ArticleValues;
+import cz.drabek.feedreader.data.source.ArticlesContentProvider;
 import cz.drabek.feedreader.data.source.ArticlesDataSource;
 import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
@@ -13,6 +15,8 @@ import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
  * Concrete implementation of a data source as a db.
  */
 public class ArticlesLocalDataSource implements ArticlesDataSource {
+
+    private static final String TAG = "ArticlesLocalDataSource";
 
     private static ArticlesLocalDataSource INSTANCE = null;
     ContentResolver mContentResolver;
@@ -45,6 +49,7 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
         checkNotNull(article);
 
         ContentValues values = ArticleValues.from(article);
-        // TODO insert values
+        Log.d(TAG, "saveArticle: |" + ArticlesContentProvider.CONTENT_ARTICLES_URI + "|");
+        mContentResolver.insert(ArticlesContentProvider.CONTENT_ARTICLES_URI,values);
     }
 }

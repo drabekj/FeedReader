@@ -12,15 +12,12 @@ import cz.drabek.feedreader.util.Injection;
 
 public class ArticlesActivity extends AppCompatActivity {
 
-    public static String PACKAGE_NAME;
     private ArticlesPresenter mArticlesPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.articles_act);
-
-        PACKAGE_NAME = getApplicationContext().getPackageName();
 
         // Set up the toolbar.
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));

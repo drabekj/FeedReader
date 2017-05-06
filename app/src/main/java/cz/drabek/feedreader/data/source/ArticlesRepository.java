@@ -55,6 +55,7 @@ public class ArticlesRepository implements ArticlesDataSource {
             @Override
             public void onArticlesLoaded(List<Article> articles) {
                 // TODO save to local DB
+                refreshLocalDataStorage(articles);
 
                 // SHOW in view (don't need if using CP + Loader)
                 callback.onArticlesLoaded(articles);
@@ -74,4 +75,9 @@ public class ArticlesRepository implements ArticlesDataSource {
 
     @Override
     public void getArticle(@NonNull String articleId, @NonNull GetArticleCallback callback) { }
+
+    private void refreshLocalDataStorage(List<Article> articles) {
+        for (Article article: articles)
+            mArticlesLocalDataSource.saveArticle(article);
+    }
 }

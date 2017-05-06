@@ -15,6 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".data.source.ArticlesContentProvider"
+            android:authorities="cz.drabek.feedreader"
+            android:exported="false"/>
     </application>
 
 </manifest>
