@@ -19,8 +19,8 @@ public class ArticlesPresenter implements
 
     public ArticlesPresenter(@NonNull ArticlesRepository articlesRepository,
                              @NonNull ArticlesContract.View articlesView) {
-        mArticlesRepository = checkNotNull(articlesRepository, "tasksRepository cannot be null");
-        mArticlesView = checkNotNull(articlesView, "tasksView cannot be null!");
+        mArticlesRepository = checkNotNull(articlesRepository, "articlesRepository cannot be null");
+        mArticlesView = checkNotNull(articlesView, "articlesView cannot be null!");
 
         mArticlesView.setPresenter(this);
     }
