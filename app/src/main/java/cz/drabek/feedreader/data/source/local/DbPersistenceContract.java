@@ -1,6 +1,8 @@
 package cz.drabek.feedreader.data.source.local;
 
+import android.content.ContentUris;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class DbPersistenceContract {

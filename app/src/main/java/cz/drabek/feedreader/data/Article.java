@@ -1,18 +1,16 @@
 package cz.drabek.feedreader.data;
 
-/**
- * Created by JD-mac on 04/05/2017.
- */
-
 // TODO
 public class Article {
 
+    private int mId;
     private String mTitle;
     private String mUrl;
     private String mAuthor;
     private String mContent;
 
-    public Article(String title, String url, String author, String content) {
+    public Article(int id, String title, String url, String author, String content) {
+        mId = id;
         mTitle = title;
         mUrl = url;
         mAuthor = author;
@@ -22,10 +20,31 @@ public class Article {
     @Override
     public String toString() {
         return "Article{" +
-                "mTitle='" + mTitle + '\'' +
+                "mId=" + mId +
+                ", mTitle='" + mTitle + '\'' +
                 ", mUrl='" + mUrl + '\'' +
                 ", mAuthor='" + mAuthor + '\'' +
                 ", mContent='" + mContent + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public String getAuthor() {
+        return mAuthor;
+    }
+
+    public String getContent() {
+        return mContent;
     }
 }

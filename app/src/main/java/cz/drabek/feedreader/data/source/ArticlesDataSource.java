@@ -29,4 +29,6 @@ public interface ArticlesDataSource {
     void getArticles(@NonNull LoadArticlesCallback callback);
 
     void getArticle(@NonNull String articleId, @NonNull GetArticleCallback callback);
+
+    void saveArticle(@NonNull Article article);
 }
