@@ -1,9 +1,14 @@
 package cz.drabek.feedreader.articles;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
@@ -13,6 +18,8 @@ import cz.drabek.feedreader.util.Injection;
 public class ArticlesActivity extends AppCompatActivity {
 
     private ArticlesPresenter mArticlesPresenter;
+    private ProgressBar mProgressBar;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +28,8 @@ public class ArticlesActivity extends AppCompatActivity {
 
         // Set up the toolbar.
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        mProgressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         // Set up Articles Fragment
         ArticlesFragment articlesFragment =
@@ -45,6 +54,42 @@ public class ArticlesActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_settings:
+                Toast.makeText(this, "Settings not implemented yet.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.menu_item_feeds:
+                Toast.makeText(this, "Feeds not implemented yet.", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(this, FeedConfigActivity.class);
+//                startActivity(intent);
+                return true;
+            case R.id.menu_item_refresh:
+                Toast.makeText(this, "Refresh not implemented yet.", Toast.LENGTH_SHORT).show();
+                mArticlesPresenter.loadArticles();
+//                mTaskFragment.executeTaskFetchFeed();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public void setLoadingIndicator(boolean activated) {
+        // TODO fix so that this if is not needed
+        if (mProgressBar == null || mToolbar == null || mToolbar.findViewById(R.id.menu_item_refresh) == null)
+            return;
+
+        if (activated) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mToolbar.findViewById(R.id.menu_item_refresh).setVisibility(View.GONE);
+        }
+        else {
+            mProgressBar.setVisibility(View.GONE);
+            mToolbar.findViewById(R.id.menu_item_refresh).setVisibility(View.VISIBLE);
+        }
     }
 
 }

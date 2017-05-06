@@ -23,6 +23,8 @@ public interface ArticlesContract {
 
     interface Presenter extends BasePresenter {
 
+        void loadArticles();
+
         void openArticleDetails(Article article);
 
     }

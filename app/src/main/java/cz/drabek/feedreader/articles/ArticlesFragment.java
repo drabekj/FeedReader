@@ -105,6 +105,9 @@ public class ArticlesFragment extends Fragment
     // TODO setLoadingIndicator
     @Override
     public void setLoadingIndicator(boolean active) {
+        if (getView() == null)
+            return;
 
+        ((ArticlesActivity) getActivity()).setLoadingIndicator(active);
     }
 }

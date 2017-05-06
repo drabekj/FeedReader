@@ -49,8 +49,9 @@ public class ArticlesPresenter implements
         loadArticles();
     }
 
-    private void loadArticles() {
-        Log.d(TAG, "loadArticles: ");
+    @Override
+    public void loadArticles() {
+        mArticlesView.setLoadingIndicator(true);
         mArticlesRepository.getArticles(this);
     }
 
@@ -62,7 +63,6 @@ public class ArticlesPresenter implements
      */
     @Override
     public void onArticlesLoaded(List<Article> articles) {
-        Log.d(TAG, "onArticlesLoaded: ");
         // we don't care about the result since the CursorLoader will load the data for us
         if (mLoaderManager.getLoader(ARTICLES_LOADER) == null)
             mLoaderManager.initLoader(ARTICLES_LOADER, null, this);
@@ -80,7 +80,6 @@ public class ArticlesPresenter implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "onCreateLoader: ");
         switch (id) {
             case ARTICLES_LOADER:
                 return new CursorLoader(mContext, ArticlesContentProvider.CONTENT_ARTICLES_URI,
@@ -94,8 +93,6 @@ public class ArticlesPresenter implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d(TAG, "onLoadFinished: ");
-        
         if (data != null) {
             if (data.moveToLast()) {
                 onDataLoaded(data);
@@ -108,27 +105,19 @@ public class ArticlesPresenter implements
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        Log.d(TAG, "onLoaderReset: ");
-        onDataReset();
-    }
+    public void onLoaderReset(Loader<Cursor> loader) { onDataReset(); }
 
     private void onDataLoaded(Cursor data) {
-        Log.d(TAG, "onDataLoaded: ");
         mArticlesView.setLoadingIndicator(false);
         mArticlesView.showTasks(data);
     }
 
     private void onDataEmpty() {
-        Log.d(TAG, "onDataEmpty: ");
         mArticlesView.setLoadingIndicator(false);
         mArticlesView.showNoTasks();
     }
 
-    private void onDataReset() {
-        Log.d(TAG, "onDataReset: ");
-        mArticlesView.showTasks(null);
-    }
+    private void onDataReset() { mArticlesView.showTasks(null); }
 
     // TODO implement intent to open article details
     @Override

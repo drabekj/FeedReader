@@ -4,7 +4,6 @@ import android.database.Cursor;
 
 import cz.drabek.feedreader.data.source.local.DbPersistenceContract;
 
-// TODO
 public class Article {
 
     private int mId;
