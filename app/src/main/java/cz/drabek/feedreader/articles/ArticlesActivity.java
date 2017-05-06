@@ -33,6 +33,8 @@ public class ArticlesActivity extends AppCompatActivity {
 
         // Create the presenter
         mArticlesPresenter = new ArticlesPresenter(
+                getApplicationContext(),
+                getSupportLoaderManager(),
                 Injection.provideTasksRepository(getApplicationContext()),
                 articlesFragment
         );

@@ -54,7 +54,6 @@ public class ArticlesRepository implements ArticlesDataSource {
         mArticlesRemoteDataSource.getArticles(new LoadArticlesCallback() {
             @Override
             public void onArticlesLoaded(List<Article> articles) {
-                // TODO save to local DB
                 refreshLocalDataStorage(articles);
 
                 // SHOW in view (don't need if using CP + Loader)

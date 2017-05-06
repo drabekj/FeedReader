@@ -1,5 +1,7 @@
 package cz.drabek.feedreader.articles;
 
+import android.database.Cursor;
+
 import cz.drabek.feedreader.BasePresenter;
 import cz.drabek.feedreader.BaseView;
 
@@ -9,6 +11,12 @@ import cz.drabek.feedreader.BaseView;
 public interface ArticlesContract {
 
     interface View extends BaseView<Presenter> {
+
+        void showTasks(Cursor data);
+
+        void showNoTasks();
+
+        void setLoadingIndicator(boolean active);
 
     }
 
