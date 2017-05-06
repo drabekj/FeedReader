@@ -4,11 +4,10 @@ package cz.drabek.feedreader.data.source;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
-import cz.drabek.feedreader.data.source.local.StaticArticlesDataSource;
+import cz.drabek.feedreader.data.source.remote.StaticArticlesDataSource;
 
 public class ArticlesRepository implements ArticlesDataSource {
 

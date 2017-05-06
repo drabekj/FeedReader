@@ -1,4 +1,4 @@
-package cz.drabek.feedreader.data.source.local;
+package cz.drabek.feedreader.data.source.remote;
 
 import android.support.annotation.NonNull;
 

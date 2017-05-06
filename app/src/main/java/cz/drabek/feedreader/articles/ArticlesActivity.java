@@ -3,13 +3,10 @@ package cz.drabek.feedreader.articles;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 
 import cz.drabek.feedreader.R;
-import cz.drabek.feedreader.data.source.ArticlesDataSource;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
-import cz.drabek.feedreader.data.source.local.StaticArticlesDataSource;
 import cz.drabek.feedreader.util.ActivityUtils;
 
 public class ArticlesActivity extends AppCompatActivity {
