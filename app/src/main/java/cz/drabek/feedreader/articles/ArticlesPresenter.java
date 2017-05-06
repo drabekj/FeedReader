@@ -8,6 +8,7 @@ import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
+import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
 public class ArticlesPresenter implements
         ArticlesContract.Presenter, ArticlesRepository.LoadArticlesCallback,
@@ -18,10 +19,8 @@ public class ArticlesPresenter implements
 
     public ArticlesPresenter(@NonNull ArticlesRepository articlesRepository,
                              @NonNull ArticlesContract.View articlesView) {
-//        mArticlesRepository = checkNotNull(tasksRepository, "tasksRepository cannot be null");
-//        mArticlesView = checkNotNull(tasksView, "tasksView cannot be null!");
-        mArticlesRepository = articlesRepository;
-        mArticlesView = articlesView;
+        mArticlesRepository = checkNotNull(articlesRepository, "tasksRepository cannot be null");
+        mArticlesView = checkNotNull(articlesView, "tasksView cannot be null!");
 
         mArticlesView.setPresenter(this);
     }
