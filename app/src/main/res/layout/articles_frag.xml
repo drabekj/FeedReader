@@ -35,7 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@android:drawable/presence_busy"
-                android:id="@+id/no_articles_icon"/>
+                android:id="@+id/no_articles_icon"
+                android:contentDescription="@string/no_articles_image_desc"/>
 
             <TextView
                 android:text="@string/no_articles_message"
