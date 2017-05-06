@@ -8,19 +8,30 @@ import java.util.List;
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.source.ArticlesDataSource;
 
-public class StaticArticlesDataSource implements ArticlesDataSource {
+public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
+
+    private static FakeArticlesRemoteDataSource INSTANCE = null;
 
     private List<Article> list;
 
-    public StaticArticlesDataSource() {
+    // Prevent direct instantiation.
+    private FakeArticlesRemoteDataSource() {
         list = new ArrayList<>(20);
 
         for (int i = 0; i < 20; i++)
             list.add(new Article(
+                    i,
                     "Title" + i,
                     "www.datasource" + i + ".com",
                     "Adolf " + i,
                     "Content: " + i));
+    }
+
+    public static FakeArticlesRemoteDataSource getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new FakeArticlesRemoteDataSource();
+        }
+        return INSTANCE;
     }
 
     @Override
@@ -33,4 +44,9 @@ public class StaticArticlesDataSource implements ArticlesDataSource {
 
     @Override
     public void getArticle(@NonNull String articleId, @NonNull GetArticleCallback callback) { }
+
+    @Override
+    public void saveArticle(@NonNull Article article) {
+
+    }
 }

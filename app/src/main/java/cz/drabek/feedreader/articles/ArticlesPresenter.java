@@ -50,6 +50,8 @@ public class ArticlesPresenter implements
         for (Article a: articles)
             Log.d("Mock Data", "onArticlesLoaded: " + a);
 
+
+
         // TODO trigger loader to refresh data from local storage
     }
 
