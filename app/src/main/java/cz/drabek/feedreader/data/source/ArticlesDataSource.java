@@ -14,7 +14,7 @@ public interface ArticlesDataSource {
 
     interface LoadArticlesCallback {
 
-        void onArticlesLoaded(List<Article> article);
+        void onArticlesLoaded(List<Article> articles);
 
         void onDataNotAvailable();
     }
