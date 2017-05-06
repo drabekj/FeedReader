@@ -34,11 +34,6 @@ public class ArticlesPresenter implements
         mArticlesRepository.getArticles(this);
     }
 
-    @Override
-    public void onArticleLoaded(Article article) {
-
-    }
-
     /**
      * Articles saved to local storage.
      *
@@ -52,6 +47,11 @@ public class ArticlesPresenter implements
 
 
         // TODO trigger loader to refresh data from local storage
+    }
+
+    @Override
+    public void onArticleLoaded(Article article) {
+
     }
 
     @Override

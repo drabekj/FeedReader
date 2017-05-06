@@ -48,14 +48,15 @@ public class ArticlesRepository implements ArticlesDataSource {
         INSTANCE = null;
     }
 
-    // TODO currently implemented for mock static data
     @Override
     public void getArticles(@NonNull final LoadArticlesCallback callback) {
-        final FakeArticlesRemoteDataSource mMockData = new FakeArticlesRemoteDataSource();
-
-        mMockData.getArticles(new LoadArticlesCallback() {
+        // Load data from server
+        mArticlesRemoteDataSource.getArticles(new LoadArticlesCallback() {
             @Override
             public void onArticlesLoaded(List<Article> articles) {
+                // TODO save to local DB
+
+                // SHOW in view (don't need if using CP + Loader)
                 callback.onArticlesLoaded(articles);
             }
 
