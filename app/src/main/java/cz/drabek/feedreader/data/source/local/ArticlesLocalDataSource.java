@@ -49,7 +49,6 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
         checkNotNull(article);
 
         ContentValues values = ArticleValues.from(article);
-        Log.d(TAG, "saveArticle: |" + ArticlesContentProvider.CONTENT_ARTICLES_URI + "|");
         mContentResolver.insert(ArticlesContentProvider.CONTENT_ARTICLES_URI,values);
     }
 }
