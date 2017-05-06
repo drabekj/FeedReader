@@ -129,4 +129,10 @@ public class ArticlesPresenter implements
         Log.d(TAG, "onDataReset: ");
         mArticlesView.showTasks(null);
     }
+
+    // TODO implement intent to open article details
+    @Override
+    public void openArticleDetails(Article article) {
+        //...
+    }
 }

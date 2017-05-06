@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import cz.drabek.feedreader.BasePresenter;
 import cz.drabek.feedreader.BaseView;
+import cz.drabek.feedreader.data.Article;
 
 /**
  * This specifies the contract between the view and the presenter.
@@ -21,6 +22,8 @@ public interface ArticlesContract {
     }
 
     interface Presenter extends BasePresenter {
+
+        void openArticleDetails(Article article);
 
     }
 

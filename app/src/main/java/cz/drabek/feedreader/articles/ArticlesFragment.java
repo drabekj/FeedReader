@@ -30,7 +30,8 @@ public class ArticlesFragment extends Fragment
     private ArticleItemListener mItemListener = new ArticleItemListener() {
         @Override
         public void onArticleClick(Article clickedArticle) {
-            Toast.makeText(getContext(), "Article clicked.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Article " + clickedArticle.getId(), Toast.LENGTH_SHORT).show();
+            mPresenter.openArticleDetails(clickedArticle);
         }
     };
 
