@@ -18,7 +18,6 @@ public class DbPersistenceContract {
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_AUTHOR = "author";
         public static final String COLUMN_NAME_CREATION_DATE = "creation_date";
-        public static final String COLUMN_NAME_DESCRIPTION = "description";
         public static final String COLUMN_NAME_CONTENT = "content";
 
         private static final String SQL_CREATE_ENTRIES =
@@ -28,7 +27,6 @@ public class DbPersistenceContract {
                         COLUMN_NAME_TITLE         + " TEXT," +
                         COLUMN_NAME_AUTHOR        + " TEXT," +
                         COLUMN_NAME_CREATION_DATE + " DATE," +
-                        COLUMN_NAME_DESCRIPTION   + " TEXT," +
                         COLUMN_NAME_CONTENT       + " TEXT)";
 
         private static final String SQL_DELETE_ENTRIES =

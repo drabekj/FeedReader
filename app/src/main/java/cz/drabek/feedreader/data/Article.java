@@ -1,5 +1,9 @@
 package cz.drabek.feedreader.data;
 
+import android.database.Cursor;
+
+import cz.drabek.feedreader.data.source.local.DbPersistenceContract;
+
 // TODO
 public class Article {
 
@@ -46,5 +50,25 @@ public class Article {
 
     public String getContent() {
         return mContent;
+    }
+
+    /**
+     * Use this constructor to return a Task from a Cursor
+     *
+     * @return
+     */
+    public static Article from(Cursor cursor) {
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(
+                DbPersistenceContract.ArticleEntry._ID));
+        String title = cursor.getString(cursor.getColumnIndexOrThrow(
+                DbPersistenceContract.ArticleEntry.COLUMN_NAME_TITLE));
+        String url = cursor.getString(cursor.getColumnIndexOrThrow(
+                DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL));
+        String author = cursor.getString(cursor.getColumnIndexOrThrow(
+                DbPersistenceContract.ArticleEntry.COLUMN_NAME_AUTHOR));
+        String content = cursor.getString(cursor.getColumnIndexOrThrow(
+                DbPersistenceContract.ArticleEntry.COLUMN_NAME_CONTENT));
+
+        return new Article(id, title, url, author, content);
     }
 }

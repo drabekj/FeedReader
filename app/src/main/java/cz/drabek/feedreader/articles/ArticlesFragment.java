@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import cz.drabek.feedreader.R;
+import cz.drabek.feedreader.data.Article;
 
 public class ArticlesFragment extends Fragment
         implements ArticlesContract.View, LoaderManager.LoaderCallbacks<Cursor> {
@@ -67,6 +68,12 @@ public class ArticlesFragment extends Fragment
     // TODO
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
+    public interface ArticleItemListener {
+
+        void onArticleClick(Article clickedArticle);
 
     }
 }
