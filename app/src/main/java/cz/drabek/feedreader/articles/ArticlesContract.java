@@ -19,6 +19,8 @@ public interface ArticlesContract {
 
         void setLoadingIndicator(boolean active);
 
+        void showArticleDetailsUi(Article article);
+
     }
 
     interface Presenter extends BasePresenter {

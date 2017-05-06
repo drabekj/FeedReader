@@ -27,13 +27,14 @@ public class ArticlesActivity extends AppCompatActivity {
         setContentView(R.layout.articles_act);
 
         // Set up the toolbar.
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        mProgressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mProgressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
+        setSupportActionBar(mToolbar);
 
         // Set up Articles Fragment
         ArticlesFragment articlesFragment =
                 (ArticlesFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+
         if (articlesFragment == null) {
             // Create the fragment
             articlesFragment = ArticlesFragment.newInstance();

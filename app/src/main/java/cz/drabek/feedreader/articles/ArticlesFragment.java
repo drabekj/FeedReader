@@ -1,12 +1,11 @@
 package cz.drabek.feedreader.articles;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
+import cz.drabek.feedreader.articledetail.ArticleDetailActivity;
 import cz.drabek.feedreader.data.Article;
 
 public class ArticlesFragment extends Fragment
@@ -46,8 +46,7 @@ public class ArticlesFragment extends Fragment
     }
 
     public static ArticlesFragment newInstance() {
-        ArticlesFragment fragment = new ArticlesFragment();
-        return fragment;
+        return new ArticlesFragment();
     }
 
     @Nullable
@@ -86,6 +85,15 @@ public class ArticlesFragment extends Fragment
 
         void onArticleClick(Article clickedArticle);
 
+    }
+
+    @Override
+    public void showArticleDetailsUi(Article article) {
+        // in it's own Activity, since it makes more sense that way and it gives us the flexibility
+        // to show some Intent stubbing.
+        Intent intent = new Intent(getContext(), ArticleDetailActivity.class);
+        intent.putExtra(ArticleDetailActivity.EXTRA_ARTICLE_ID, article.getId());
+        startActivity(intent);
     }
 
     @Override
