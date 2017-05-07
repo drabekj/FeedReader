@@ -94,4 +94,9 @@ public class ArticlesRepository implements ArticlesDataSource {
         for (Article article: articles)
             mArticlesLocalDataSource.saveArticle(article);
     }
+
+    @Override
+    public void getFeeds(@NonNull LoadFeedsCallback callback) {
+        callback.onFeedsLoaded(null);
+    }
 }

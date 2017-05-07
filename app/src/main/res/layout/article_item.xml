@@ -8,8 +8,7 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/list_item_padding"
-              android:paddingBottom="@dimen/list_item_padding"
-    >
+              android:paddingBottom="@dimen/list_item_padding">
 
     <TextView
         android:layout_width="match_parent"

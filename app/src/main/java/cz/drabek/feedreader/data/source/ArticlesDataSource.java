@@ -27,11 +27,20 @@ public interface ArticlesDataSource {
         void onDataNotAvailable();
     }
 
+    interface LoadFeedsCallback {
+
+        void onFeedsLoaded(List<Feed> feeds);
+
+        void onDataNotAvailable();
+    }
+
     void getArticles(@NonNull LoadArticlesCallback callback);
 
     void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback);
 
     void saveArticle(@NonNull Article article);
+
+    void getFeeds(@NonNull LoadFeedsCallback callback);
 
     void saveFeed(@NonNull Feed feed);
 }

@@ -3,6 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="?android:attr/listPreferredItemHeight"
+              android:clickable="true"
+              android:background="?attr/selectableItemBackground"
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingBottom="@dimen/list_item_padding"
@@ -13,6 +15,7 @@
         tools:text="Feed Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:id="@+id/feed_item_name"/>
 
     <TextView

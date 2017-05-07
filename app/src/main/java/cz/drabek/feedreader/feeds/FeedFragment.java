@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class FeedFragment extends Fragment implements FeedsContract.View {
         @Override
         public void onFeedClickListener(Feed clickedFeed) {
             // TODO
-            Toast.makeText(getContext(), "Feed clicked", Toast.LENGTH_SHORT);
+            Log.d("HONZA", "onFeedClickListener: clickedFeed");
         }
     };
     private ListView mListView;
@@ -49,7 +50,7 @@ public class FeedFragment extends Fragment implements FeedsContract.View {
         mListAdapter = new FeedsCursorAdapter(getActivity(), mItemListener);
         mListView = (ListView) root.findViewById(R.id.feeds_list);
         mListView.setAdapter(mListAdapter);
-        mFeedsView = (LinearLayout) root.findViewById(R.id.articlesLL);
+        mFeedsView = (LinearLayout) root.findViewById(R.id.feedsLL);
 
         // Set up no feeds view
         mNoFeedsView = (LinearLayout) root.findViewById(R.id.noFeeds);
@@ -68,11 +69,10 @@ public class FeedFragment extends Fragment implements FeedsContract.View {
         void onFeedClickListener(Feed clickedFeed);
     }
 
-    // TODO
     @Override
     public void showFeeds(Cursor feeds) {
         // swap loader cursor
-
+        mListAdapter.swapCursor(feeds);
 
         mFeedsView.setVisibility(View.VISIBLE);
         mNoFeedsView.setVisibility(View.GONE);

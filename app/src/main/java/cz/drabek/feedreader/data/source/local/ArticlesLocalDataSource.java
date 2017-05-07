@@ -58,6 +58,9 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     }
 
     @Override
+    public void getFeeds(@NonNull LoadFeedsCallback callback) { }
+
+    @Override
     public void saveFeed(@NonNull Feed feed) {
         checkNotNull(feed);
 

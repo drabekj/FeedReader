@@ -52,4 +52,7 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
 
     @Override
     public void saveFeed(@NonNull Feed feed) { }
+
+    @Override
+    public void getFeeds(@NonNull LoadFeedsCallback callback) { }
 }

@@ -34,6 +34,7 @@ public class FeedActivity extends AppCompatActivity {
 
         // Crete presenter
         mPresenter = new FeedPresenter(
+                getApplicationContext(),
                 getSupportLoaderManager(),
                 Injection.provideTasksRepository(getApplicationContext()),
                 feedFragment
