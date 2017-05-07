@@ -13,4 +13,8 @@
     <string name="menu_item_add">Add feed source</string>
     <string name="no_feeds_image_desc">No feeds icon</string>
     <string name="no_feeds_message">There are no feed sources</string>
+    <string name="feed_url">URL of the feed</string>
+    <string name="feed_name">Name of the feed</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 </resources>

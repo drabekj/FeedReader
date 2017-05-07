@@ -14,6 +14,7 @@ import cz.drabek.feedreader.util.Injection;
 public class FeedActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
+    private NewFeedDialogFragment mDialog;
     private FeedPresenter mPresenter;
 
     @Override
@@ -24,6 +25,8 @@ public class FeedActivity extends AppCompatActivity {
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        mDialog = new NewFeedDialogFragment();
+
 
         // Set up fragment
         FeedFragment feedFragment = (FeedFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
@@ -52,7 +55,7 @@ public class FeedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_add_feed:
-                Toast.makeText(this, "Adding feeds not implemented yet.", Toast.LENGTH_SHORT).show();
+                mDialog.show(getSupportFragmentManager(), "dialog");
                 return true;
             default:
                 return false;
