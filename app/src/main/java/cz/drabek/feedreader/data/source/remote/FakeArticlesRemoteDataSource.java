@@ -22,7 +22,6 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
 
         for (int i = 0; i < 20; i++)
             list.add(new Article(
-                    i,
                     "Title " + i,
                     "http://www.datasource" + i + ".com",
                     "Adolf " + i,

@@ -12,8 +12,13 @@ public class Feed {
     String mName;
     String mUrl;
 
-    public Feed(int id, String name, String url) {
+    private Feed(int id, String name, String url) {
+        this(name, url);
         mId = id;
+    }
+
+    public Feed(String name, String url) {
+        mId = -1;
         mName = name;
         mUrl = url;
     }
@@ -48,7 +53,8 @@ public class Feed {
 
     public static ContentValues from(Feed feed) {
         ContentValues values = new ContentValues();
-        values.put(DbPersistenceContract.FeedEntry._ID, feed.getId());
+        if (feed.getId() >= 0)
+            values.put(DbPersistenceContract.FeedEntry._ID, feed.getId());
         values.put(DbPersistenceContract.FeedEntry.COLUMN_NAME_NAME, feed.getName());
         values.put(DbPersistenceContract.FeedEntry.COLUMN_NAME_URL, feed.getUrl());
 

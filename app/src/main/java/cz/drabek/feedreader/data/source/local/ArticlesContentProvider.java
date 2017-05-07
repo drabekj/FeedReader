@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class ArticlesContentProvider extends ContentProvider {
 
@@ -105,16 +106,16 @@ public class ArticlesContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues contentValues) {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int uriType = sURIMatcher.match(uri);
-        Uri returnUri;
+        Uri returnUri = null;
 
         Cursor exists;
         switch (uriType) {
             case ARTICLE_LIST:
                 exists = db.query(
                         DbPersistenceContract.ArticleEntry.TABLE_NAME,
-                        new String[]{DbPersistenceContract.ArticleEntry._ID},
-                        DbPersistenceContract.ArticleEntry._ID + " = ?",
-                        new String[]{contentValues.getAsString(DbPersistenceContract.ArticleEntry._ID)},
+                        new String[]{DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL},
+                        DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL + " = ?",
+                        new String[]{contentValues.getAsString(DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL)},
                         null,
                         null,
                         null
@@ -122,30 +123,29 @@ public class ArticlesContentProvider extends ContentProvider {
                 if (exists.moveToLast()) {
                     long _id = db.update(
                             DbPersistenceContract.ArticleEntry.TABLE_NAME, contentValues,
-                            DbPersistenceContract.ArticleEntry._ID + " = ?",
-                            new String[]{contentValues.getAsString(DbPersistenceContract.ArticleEntry._ID)}
+                            DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL + " = ?",
+                            new String[]{contentValues.getAsString(DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL)}
                     );
-                    if (_id > 0) {
+                    if (_id > 0)
                         returnUri = Uri.parse(ARTICLE_PATH + "/" + _id);
-                    } else {
+                    else
                         throw new android.database.SQLException("Failed to insert row into " + uri);
-                    }
-                } else {
+                }
+                else {
                     long _id = db.insert(DbPersistenceContract.ArticleEntry.TABLE_NAME, null, contentValues);
-                    if (_id >= 0) {
+                    if (_id >= 0)
                         returnUri = Uri.parse(ARTICLE_PATH + "/" + _id);
-                    } else {
+                    else
                         throw new android.database.SQLException("Failed to insert row into " + uri);
-                    }
                 }
                 exists.close();
                 break;
             case FEED_LIST:
                 exists = db.query(
                         DbPersistenceContract.FeedEntry.TABLE_NAME,
-                        new String[]{DbPersistenceContract.FeedEntry._ID},
-                        DbPersistenceContract.FeedEntry._ID + " = ?",
-                        new String[]{contentValues.getAsString(DbPersistenceContract.FeedEntry._ID)},
+                        new String[]{DbPersistenceContract.FeedEntry.COLUMN_NAME_URL},
+                        DbPersistenceContract.FeedEntry.COLUMN_NAME_URL + " = ?",
+                        new String[]{contentValues.getAsString(DbPersistenceContract.FeedEntry.COLUMN_NAME_URL)},
                         null,
                         null,
                         null
@@ -153,21 +153,21 @@ public class ArticlesContentProvider extends ContentProvider {
                 if (exists.moveToLast()) {
                     long _id = db.update(
                             DbPersistenceContract.FeedEntry.TABLE_NAME, contentValues,
-                            DbPersistenceContract.FeedEntry._ID + " = ?",
-                            new String[]{contentValues.getAsString(DbPersistenceContract.FeedEntry._ID)}
+                            DbPersistenceContract.FeedEntry.COLUMN_NAME_URL + " = ?",
+                            new String[]{contentValues.getAsString(DbPersistenceContract.FeedEntry.COLUMN_NAME_URL)}
                     );
                     if (_id > 0) {
                         returnUri = Uri.parse(FEED_PATH + "/" + _id);
                     } else {
                         throw new android.database.SQLException("Failed to insert row into " + uri);
                     }
-                } else {
+                }
+                else {
                     long _id = db.insert(DbPersistenceContract.FeedEntry.TABLE_NAME, null, contentValues);
-                    if (_id >= 0) {
+                    if (_id >= 0)
                         returnUri = Uri.parse(FEED_PATH + "/" + _id);
-                    } else {
+                    else
                         throw new android.database.SQLException("Failed to insert row into " + uri);
-                    }
                 }
                 exists.close();
                 break;

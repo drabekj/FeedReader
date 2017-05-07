@@ -13,8 +13,13 @@ public class Article {
     private String mAuthor;
     private String mContent;
 
-    public Article(int id, String title, String url, String author, String content) {
+    private Article(int id, String title, String url, String author, String content) {
+        this(title, url, author, content);
         mId = id;
+    }
+
+    public Article(String title, String url, String author, String content) {
+        mId = -1;
         mTitle = title;
         mUrl = url;
         mAuthor = author;
@@ -74,7 +79,8 @@ public class Article {
 
     public static ContentValues from(Article article) {
         ContentValues values = new ContentValues();
-        values.put(DbPersistenceContract.ArticleEntry._ID, article.getId());
+        if (article.getId() >= 0)
+            values.put(DbPersistenceContract.ArticleEntry._ID, article.getId());
         values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_TITLE, article.getTitle());
         values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL, article.getUrl());
         values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_AUTHOR, article.getAuthor());
