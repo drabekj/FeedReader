@@ -19,6 +19,7 @@ public class ArticlesContentProvider extends ContentProvider {
     private static final int ARTICLE_LIST = 1;
     private static final int ARTICLE_ID = 2;
     private static final int FEED_LIST = 3;
+    private static final int FEED_ID = 4;
     private static final UriMatcher sURIMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher() {
@@ -27,6 +28,7 @@ public class ArticlesContentProvider extends ContentProvider {
         matcher.addURI(AUTHORITY, DbPersistenceContract.ArticleEntry.TABLE_NAME, ARTICLE_LIST);
         matcher.addURI(AUTHORITY, DbPersistenceContract.ArticleEntry.TABLE_NAME + "/#", ARTICLE_ID);
         matcher.addURI(AUTHORITY, DbPersistenceContract.FeedEntry.TABLE_NAME, FEED_LIST);
+        matcher.addURI(AUTHORITY, DbPersistenceContract.FeedEntry.TABLE_NAME + "/#", FEED_ID);
 
         return matcher;
     }
@@ -56,12 +58,35 @@ public class ArticlesContentProvider extends ContentProvider {
                 );
                 break;
             case ARTICLE_ID:
-                String[] where = {uri.getLastPathSegment()};
+                String where = uri.getLastPathSegment();
                 retCursor = mDbHelper.getReadableDatabase().query(
                         DbPersistenceContract.ArticleEntry.TABLE_NAME,
                         projection,
                         DbPersistenceContract.ArticleEntry._ID + " = ?",
-                        where,
+                        new String[]{where},
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case FEED_LIST:
+                retCursor = mDbHelper.getReadableDatabase().query(
+                        DbPersistenceContract.FeedEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case FEED_ID:
+                where = uri.getLastPathSegment();
+                retCursor = mDbHelper.getReadableDatabase().query(
+                        DbPersistenceContract.FeedEntry.TABLE_NAME,
+                        projection,
+                        DbPersistenceContract.FeedEntry._ID + " = ?",
+                        new String[]{where},
                         null,
                         null,
                         sortOrder
@@ -82,9 +107,10 @@ public class ArticlesContentProvider extends ContentProvider {
         int uriType = sURIMatcher.match(uri);
         Uri returnUri;
 
+        Cursor exists;
         switch (uriType) {
             case ARTICLE_LIST:
-                Cursor exists = db.query(
+                exists = db.query(
                         DbPersistenceContract.ArticleEntry.TABLE_NAME,
                         new String[]{DbPersistenceContract.ArticleEntry._ID},
                         DbPersistenceContract.ArticleEntry._ID + " = ?",
@@ -114,6 +140,37 @@ public class ArticlesContentProvider extends ContentProvider {
                 }
                 exists.close();
                 break;
+            case FEED_LIST:
+                exists = db.query(
+                        DbPersistenceContract.FeedEntry.TABLE_NAME,
+                        new String[]{DbPersistenceContract.FeedEntry._ID},
+                        DbPersistenceContract.FeedEntry._ID + " = ?",
+                        new String[]{contentValues.getAsString(DbPersistenceContract.FeedEntry._ID)},
+                        null,
+                        null,
+                        null
+                );
+                if (exists.moveToLast()) {
+                    long _id = db.update(
+                            DbPersistenceContract.FeedEntry.TABLE_NAME, contentValues,
+                            DbPersistenceContract.FeedEntry._ID + " = ?",
+                            new String[]{contentValues.getAsString(DbPersistenceContract.FeedEntry._ID)}
+                    );
+                    if (_id > 0) {
+                        returnUri = Uri.parse(FEED_PATH + "/" + _id);
+                    } else {
+                        throw new android.database.SQLException("Failed to insert row into " + uri);
+                    }
+                } else {
+                    long _id = db.insert(DbPersistenceContract.FeedEntry.TABLE_NAME, null, contentValues);
+                    if (_id >= 0) {
+                        returnUri = Uri.parse(FEED_PATH + "/" + _id);
+                    } else {
+                        throw new android.database.SQLException("Failed to insert row into " + uri);
+                    }
+                }
+                exists.close();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
@@ -133,6 +190,10 @@ public class ArticlesContentProvider extends ContentProvider {
                 rowsDeleted = db.delete(
                         DbPersistenceContract.ArticleEntry.TABLE_NAME, selection, selectionArgs);
                 break;
+            case FEED_ID:
+                rowsDeleted = db.delete(
+                        DbPersistenceContract.FeedEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -151,6 +212,13 @@ public class ArticlesContentProvider extends ContentProvider {
         switch (match) {
             case ARTICLE_ID:
                 rowsUpdated = db.update(DbPersistenceContract.ArticleEntry.TABLE_NAME,
+                        contentValues,
+                        selection,
+                        selectionArgs
+                );
+                break;
+            case FEED_ID:
+                rowsUpdated = db.update(DbPersistenceContract.FeedEntry.TABLE_NAME,
                         contentValues,
                         selection,
                         selectionArgs

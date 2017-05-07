@@ -35,9 +35,7 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     }
 
     @Override
-    public void getArticles(@NonNull LoadArticlesCallback callback) {
-
-    }
+    public void getArticles(@NonNull LoadArticlesCallback callback) { }
 
     @Override
     public void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback) {
