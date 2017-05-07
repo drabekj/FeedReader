@@ -72,11 +72,6 @@ public class ArticlesRepository implements ArticlesDataSource {
     public void saveArticle(@NonNull Article article) { }
 
     @Override
-    public void saveFeed(@NonNull Feed feed) {
-        mArticlesLocalDataSource.saveFeed(feed);
-    }
-
-    @Override
     public void getArticle(@NonNull int articleId, @NonNull final GetArticleCallback callback) {
         // Get data from local storage
         mArticlesLocalDataSource.getArticle(articleId, new GetArticleCallback() {
@@ -90,13 +85,18 @@ public class ArticlesRepository implements ArticlesDataSource {
         });
     }
 
-    private void refreshLocalDataStorage(List<Article> articles) {
-        for (Article article: articles)
-            mArticlesLocalDataSource.saveArticle(article);
+    @Override
+    public void saveFeed(@NonNull Feed feed) {
+        mArticlesLocalDataSource.saveFeed(feed);
     }
 
     @Override
     public void getFeeds(@NonNull LoadFeedsCallback callback) {
         callback.onFeedsLoaded(null);
+    }
+
+    private void refreshLocalDataStorage(List<Article> articles) {
+        for (Article article: articles)
+            mArticlesLocalDataSource.saveArticle(article);
     }
 }

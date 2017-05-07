@@ -25,7 +25,7 @@ public class FeedActivity extends AppCompatActivity {
         // Set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mDialog = new NewFeedDialogFragment();
+        mDialog = NewFeedDialogFragment.newInstance();
 
 
         // Set up fragment
@@ -40,7 +40,8 @@ public class FeedActivity extends AppCompatActivity {
                 getApplicationContext(),
                 getSupportLoaderManager(),
                 Injection.provideTasksRepository(getApplicationContext()),
-                feedFragment
+                feedFragment,
+                mDialog
         );
     }
 

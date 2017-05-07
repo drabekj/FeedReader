@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import cz.drabek.feedreader.BasePresenter;
 import cz.drabek.feedreader.BaseView;
+import cz.drabek.feedreader.data.Feed;
 
 public interface FeedsContract {
 
@@ -16,6 +17,12 @@ public interface FeedsContract {
     }
 
     interface Presenter extends BasePresenter {
+
+        void saveFeed(String name, String url);
+
+    }
+
+    interface DialogView extends BaseView<Presenter> {
 
     }
 

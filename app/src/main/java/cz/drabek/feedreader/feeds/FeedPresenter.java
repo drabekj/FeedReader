@@ -33,13 +33,15 @@ public class FeedPresenter implements FeedsContract.Presenter,
     public FeedPresenter(@NonNull Context context,
                          @NonNull LoaderManager loaderManager,
                          @NonNull ArticlesRepository repository,
-                         @NonNull FeedsContract.View view) {
+                         @NonNull FeedsContract.View view,
+                         @NonNull NewFeedDialogFragment dialogView) {
         mContext        = checkNotNull(context, "context cannot be null");
         mLoaderManager  = checkNotNull(loaderManager, "loaderManager cannot be null");
         mRepository     = checkNotNull(repository, "articlesRepository cannot be null");
         mView           = checkNotNull(view, "view cannot be null!");
 
         mView.setPresenter(this);
+        dialogView.setPresenter(this);
     }
 
     @Override
@@ -102,5 +104,11 @@ public class FeedPresenter implements FeedsContract.Presenter,
     public void onDataNotAvailable() {
         Log.w(TAG, "onDataNotAvailable: error");
         mView.showNoFeeds();
+    }
+
+    // TODO
+    @Override
+    public void saveFeed(String name, String url) {
+        mRepository.saveFeed(new Feed(name, url));
     }
 }
