@@ -11,7 +11,7 @@ import android.support.v4.content.Loader;
 import android.util.Log;
 
 import cz.drabek.feedreader.data.Article;
-import cz.drabek.feedreader.data.source.ArticlesContentProvider;
+import cz.drabek.feedreader.data.source.local.ArticlesContentProvider;
 import cz.drabek.feedreader.data.source.ArticlesDataSource;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
 

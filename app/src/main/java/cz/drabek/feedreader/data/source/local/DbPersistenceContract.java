@@ -11,6 +11,7 @@ public class DbPersistenceContract {
     // make the constructor private.
     private DbPersistenceContract() {}
 
+    // Contract for Article Table
     public static class ArticleEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "article";
@@ -33,7 +34,6 @@ public class DbPersistenceContract {
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
 
 
-
         public static void onCreate(SQLiteDatabase db) { db.execSQL(SQL_CREATE_ENTRIES); }
 
         public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -46,6 +46,39 @@ public class DbPersistenceContract {
 
         public static void dropAndCreateTable(SQLiteDatabase db){
             db.execSQL(SQL_DELETE_ENTRIES);
+            onCreate(db);
+        }
+    }
+
+    // Contract for Feed Table
+    public static class FeedEntry implements BaseColumns {
+
+        public static final String TABLE_NAME = "feed";
+        public static final String COLUMN_NAME_NAME = "name";
+        public static final String COLUMN_NAME_URL = "url";
+
+        private static final String SQL_CREATE_FEED =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        _ID + " INTEGER PRIMARY KEY," +
+                        COLUMN_NAME_NAME          + " TEXT," +
+                        COLUMN_NAME_URL           + " TEXT)";
+
+        private static final String SQL_DELETE_FEED =
+                "DROP TABLE IF EXISTS " + TABLE_NAME;
+
+
+        public static void onCreate(SQLiteDatabase db) { db.execSQL(SQL_CREATE_FEED); }
+
+        public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            dropAndCreateTable(db);
+        }
+
+        public static void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            dropAndCreateTable(db);
+        }
+
+        public static void dropAndCreateTable(SQLiteDatabase db){
+            db.execSQL(SQL_DELETE_FEED);
             onCreate(db);
         }
     }

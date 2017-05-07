@@ -1,4 +1,4 @@
-package cz.drabek.feedreader.data.source;
+package cz.drabek.feedreader.data.source.local;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -9,12 +9,12 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import cz.drabek.feedreader.data.source.local.ArticlesDbHelper;
+import cz.drabek.feedreader.data.source.local.LocalDbHelper;
 import cz.drabek.feedreader.data.source.local.DbPersistenceContract;
 
 public class ArticlesContentProvider extends ContentProvider {
 
-    private ArticlesDbHelper mDbHelper;
+    private LocalDbHelper mDbHelper;
     public static final String AUTHORITY = "cz.drabek.feedreader";
     private static final String BASE_PATH = "article";
     public static final Uri CONTENT_ARTICLES_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
@@ -37,7 +37,7 @@ public class ArticlesContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        mDbHelper = new ArticlesDbHelper(getContext());
+        mDbHelper = new LocalDbHelper(getContext());
         return true;
     }
 

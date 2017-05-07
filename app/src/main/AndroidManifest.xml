@@ -20,7 +20,7 @@
         <activity android:name=".articledetail.ArticleDetailActivity"/>
 
         <provider
-            android:name=".data.source.ArticlesContentProvider"
+            android:name=".data.source.local.ArticlesContentProvider"
             android:authorities="cz.drabek.feedreader"
             android:exported="false"/>
 
