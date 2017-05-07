@@ -4,38 +4,44 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/feedsLL">
+        android:id="@+id/feedsContainer">
 
-        <ListView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/feeds_list"/>
-    </LinearLayout>
+            android:id="@+id/feedsLL">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/noFeeds">
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/feeds_list"/>
+        </LinearLayout>
 
-        <ImageView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@android:drawable/presence_busy"
-            android:id="@+id/no_feeds_icon"
-            android:contentDescription="@string/no_feeds_image_desc"/>
+            android:layout_centerInParent="true"
+            android:id="@+id/noFeeds">
 
-        <TextView
-            android:text="@string/no_feeds_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/no_feeds_message"/>
-    </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/presence_busy"
+                android:id="@+id/no_feeds_icon"
+                android:contentDescription="@string/no_feeds_image_desc"/>
+
+            <TextView
+                android:text="@string/no_feeds_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/no_feeds_message"/>
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>
