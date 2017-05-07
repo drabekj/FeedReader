@@ -80,6 +80,9 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
         checkNotNull(feedId);
 
         Uri uri = Uri.withAppendedPath(ArticlesContentProvider.CONTENT_FEEDS_URI, String.valueOf(feedId));
-        mContentResolver.delete(uri, null, null);
+        mContentResolver.delete(
+                uri,
+                DbPersistenceContract.FeedEntry._ID + " = ?",
+                new String[]{String.valueOf(feedId)});
     }
 }
