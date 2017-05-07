@@ -74,4 +74,12 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
         ContentValues values = Feed.from(feed);
         mContentResolver.insert(ArticlesContentProvider.CONTENT_FEEDS_URI, values);
     }
+
+    @Override
+    public void deleteFeed(@NonNull int feedId) {
+        checkNotNull(feedId);
+
+        Uri uri = Uri.withAppendedPath(ArticlesContentProvider.CONTENT_FEEDS_URI, String.valueOf(feedId));
+        mContentResolver.delete(uri, null, null);
+    }
 }

@@ -183,16 +183,23 @@ public class ArticlesContentProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         final int uriType = sURIMatcher.match(uri);
+        String id;
         int rowsDeleted;
 
         switch (uriType) {
             case ARTICLE_ID:
+                id = uri.getLastPathSegment();
                 rowsDeleted = db.delete(
-                        DbPersistenceContract.ArticleEntry.TABLE_NAME, selection, selectionArgs);
+                        DbPersistenceContract.ArticleEntry.TABLE_NAME,
+                        DbPersistenceContract.ArticleEntry._ID + " = ?",
+                        new String[]{id});
                 break;
             case FEED_ID:
+                id = uri.getLastPathSegment();
                 rowsDeleted = db.delete(
-                        DbPersistenceContract.FeedEntry.TABLE_NAME, selection, selectionArgs);
+                        DbPersistenceContract.FeedEntry.TABLE_NAME,
+                        DbPersistenceContract.FeedEntry._ID + " = ?",
+                        new String[]{id});
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

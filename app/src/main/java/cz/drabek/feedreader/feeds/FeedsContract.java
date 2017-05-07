@@ -24,6 +24,7 @@ public interface FeedsContract {
 
         void loadFeed(int feedId);
 
+        void deleteFeed(int feedId);
     }
 
     interface DialogView extends BaseView<Presenter> {

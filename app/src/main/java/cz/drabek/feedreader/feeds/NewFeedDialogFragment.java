@@ -103,7 +103,7 @@ public class NewFeedDialogFragment extends DialogFragment implements FeedsContra
             builder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Log.d("HONZA", "onClick: Delete");
+                    mPresenter.deleteFeed(mFeedId);
                 }
             });
         }

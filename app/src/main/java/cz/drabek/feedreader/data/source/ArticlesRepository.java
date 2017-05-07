@@ -110,4 +110,9 @@ public class ArticlesRepository implements ArticlesDataSource {
             public void onDataNotAvailable() { }
         });
     }
+
+    @Override
+    public void deleteFeed(@NonNull int feedId) {
+        mArticlesLocalDataSource.deleteFeed(feedId);
+    }
 }

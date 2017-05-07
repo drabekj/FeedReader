@@ -94,6 +94,11 @@ public class FeedPresenter implements FeedsContract.Presenter,
     }
 
     @Override
+    public void deleteFeed(int feedId) {
+        mRepository.deleteFeed(feedId);
+    }
+
+    @Override
     public void loadFeed(int feedId) {
         // load from local storage
         mRepository.getFeed(feedId, this);

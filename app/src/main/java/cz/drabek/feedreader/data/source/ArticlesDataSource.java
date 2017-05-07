@@ -53,4 +53,6 @@ public interface ArticlesDataSource {
     void getFeed(@NonNull int feedId, @NonNull GetFeedCallback callback);
 
     void saveFeed(@NonNull Feed feed);
+
+    void deleteFeed(@NonNull int feedId);
 }
