@@ -12,6 +12,8 @@ public class Feed {
     String mName;
     String mUrl;
 
+    public Feed() { }
+
     private Feed(int id, String name, String url) {
         this(name, url);
         mId = id;

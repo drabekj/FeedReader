@@ -41,10 +41,7 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     public void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback) {
         Uri uri = Uri.withAppendedPath(ArticlesContentProvider.CONTENT_ARTICLES_URI, String.valueOf(articleId));
 
-        Cursor cursor = mContentResolver.query(
-                uri,
-                null, null, null, null);
-
+        Cursor cursor = mContentResolver.query(uri, null, null, null, null);
         cursor.moveToFirst();
         callback.onArticleLoaded(Article.from(cursor));
     }
@@ -59,6 +56,16 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
 
     @Override
     public void getFeeds(@NonNull LoadFeedsCallback callback) { }
+
+    @Override
+    public void getFeed(@NonNull int feedId, @NonNull GetFeedCallback callback) {
+        Uri uri = Uri.withAppendedPath(ArticlesContentProvider.CONTENT_FEEDS_URI, String.valueOf(feedId));
+
+        Cursor cursor = mContentResolver.query(uri, null, null, null, null);
+
+        Feed feed = (cursor.moveToFirst()) ? Feed.from(cursor) : new Feed();
+        callback.onFeedLoaded(feed);
+    }
 
     @Override
     public void saveFeed(@NonNull Feed feed) {

@@ -1,6 +1,8 @@
 package cz.drabek.feedreader.feeds;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import cz.drabek.feedreader.BasePresenter;
 import cz.drabek.feedreader.BaseView;
@@ -20,9 +22,13 @@ public interface FeedsContract {
 
         void saveFeed(String name, String url);
 
+        void loadFeed(int feedId);
+
     }
 
     interface DialogView extends BaseView<Presenter> {
+
+        void prefillInputs(Feed feed);
 
     }
 

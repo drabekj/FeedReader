@@ -34,6 +34,14 @@ public interface ArticlesDataSource {
         void onDataNotAvailable();
     }
 
+    interface GetFeedCallback {
+
+        void onFeedLoaded(Feed feed);
+
+        void onDataNotAvailable();
+
+    }
+
     void getArticles(@NonNull LoadArticlesCallback callback);
 
     void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback);
@@ -41,6 +49,8 @@ public interface ArticlesDataSource {
     void saveArticle(@NonNull Article article);
 
     void getFeeds(@NonNull LoadFeedsCallback callback);
+
+    void getFeed(@NonNull int feedId, @NonNull GetFeedCallback callback);
 
     void saveFeed(@NonNull Feed feed);
 }

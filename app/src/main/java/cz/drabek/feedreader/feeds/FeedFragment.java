@@ -22,8 +22,9 @@ public class FeedFragment extends Fragment implements FeedsContract.View {
     private FeedItemListener mItemListener = new FeedItemListener() {
         @Override
         public void onFeedClickListener(Feed clickedFeed) {
-            // TODO
-            Log.d("HONZA", "onFeedClickListener: clickedFeed");
+            NewFeedDialogFragment mDialog = NewFeedDialogFragment.newInstance(clickedFeed.getId());
+            mDialog.setPresenter(mPresenter);
+            mDialog.show(getFragmentManager(), "dialog");
         }
     };
     private ListView mListView;

@@ -99,4 +99,15 @@ public class ArticlesRepository implements ArticlesDataSource {
         for (Article article: articles)
             mArticlesLocalDataSource.saveArticle(article);
     }
+
+    @Override
+    public void getFeed(@NonNull int feedId, @NonNull final GetFeedCallback callback) {
+        mArticlesLocalDataSource.getFeed(feedId, new GetFeedCallback() {
+            @Override
+            public void onFeedLoaded(Feed feed) { callback.onFeedLoaded(feed); }
+
+            @Override
+            public void onDataNotAvailable() { }
+        });
+    }
 }

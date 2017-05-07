@@ -3,6 +3,7 @@ package cz.drabek.feedreader.feeds;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -20,6 +21,7 @@ import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
 public class FeedPresenter implements FeedsContract.Presenter,
         ArticlesDataSource.LoadFeedsCallback,
+        ArticlesDataSource.GetFeedCallback,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "FeedPresenter";
@@ -29,6 +31,7 @@ public class FeedPresenter implements FeedsContract.Presenter,
     private LoaderManager mLoaderManager;
     private ArticlesRepository mRepository;
     private FeedsContract.View mView;
+    private FeedsContract.DialogView mDialogView;
 
     public FeedPresenter(@NonNull Context context,
                          @NonNull LoaderManager loaderManager,
@@ -39,9 +42,10 @@ public class FeedPresenter implements FeedsContract.Presenter,
         mLoaderManager  = checkNotNull(loaderManager, "loaderManager cannot be null");
         mRepository     = checkNotNull(repository, "articlesRepository cannot be null");
         mView           = checkNotNull(view, "view cannot be null!");
+        mDialogView     = checkNotNull(dialogView, "dialogView cannot be null");
 
         mView.setPresenter(this);
-        dialogView.setPresenter(this);
+        mDialogView.setPresenter(this);
     }
 
     @Override
@@ -85,6 +89,17 @@ public class FeedPresenter implements FeedsContract.Presenter,
     private void onDataReset() { }
 
     @Override
+    public void saveFeed(String name, String url) {
+        mRepository.saveFeed(new Feed(name, url));
+    }
+
+    @Override
+    public void loadFeed(int feedId) {
+        // load from local storage
+        mRepository.getFeed(feedId, this);
+    }
+
+    @Override
     public void onFeedsLoaded(List<Feed> feeds) {
         // we don't care about the result since the CursorLoader will load the data for us
         if (mLoaderManager.getLoader(FEEDS_LOADER) == null)
@@ -94,13 +109,12 @@ public class FeedPresenter implements FeedsContract.Presenter,
     }
 
     @Override
+    public void onFeedLoaded(Feed feed) { mDialogView.prefillInputs(feed); }
+
+    @Override
     public void onDataNotAvailable() {
         Log.w(TAG, "onDataNotAvailable: error");
         mView.showNoFeeds();
     }
 
-    @Override
-    public void saveFeed(String name, String url) {
-        mRepository.saveFeed(new Feed(name, url));
-    }
 }

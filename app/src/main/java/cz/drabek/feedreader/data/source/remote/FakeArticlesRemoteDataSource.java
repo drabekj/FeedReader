@@ -54,4 +54,7 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
 
     @Override
     public void getFeeds(@NonNull LoadFeedsCallback callback) { }
+
+    @Override
+    public void getFeed(@NonNull int feedId, @NonNull GetFeedCallback callback) { }
 }
