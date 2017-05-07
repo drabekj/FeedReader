@@ -18,8 +18,11 @@ import cz.drabek.feedreader.data.Feed;
 public class NewFeedDialogFragment extends DialogFragment implements FeedsContract.DialogView {
 
     private static final String ARG_FEED_ID = "feedId";
+    private static final String ARG_OPERATION = "operation";
+    private static NewFeedDialogFragment INSTANCE = null;
 
     private FeedsContract.Presenter mPresenter;
+    private OPERATION mOPERATION;
     private int mFeedId;
     private View     mDialog;
     private TextView mNameTV;
@@ -27,26 +30,38 @@ public class NewFeedDialogFragment extends DialogFragment implements FeedsContra
 
     public NewFeedDialogFragment() { }
 
-    public static NewFeedDialogFragment newInstance() { return new NewFeedDialogFragment(); }
+    public static NewFeedDialogFragment newInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new NewFeedDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_OPERATION, OPERATION.NEW);
+        INSTANCE.setArguments(args);
+
+        return INSTANCE;
+    }
 
     @Override
     public void setPresenter(FeedsContract.Presenter presenter) { mPresenter = presenter; }
 
     public static NewFeedDialogFragment newInstance(int feedId) {
-        NewFeedDialogFragment fragment = new NewFeedDialogFragment();
+        if (INSTANCE == null)
+            INSTANCE = new NewFeedDialogFragment();
 
         Bundle args = new Bundle();
+        args.putSerializable(ARG_OPERATION, OPERATION.EDIT);
         args.putInt(ARG_FEED_ID, feedId);
-        fragment.setArguments(args);
+        INSTANCE.setArguments(args);
 
-        return fragment;
+        return INSTANCE;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null)
+        if (getArguments() != null) {
+            mOPERATION = (OPERATION) getArguments().get(ARG_OPERATION);
             mFeedId = getArguments().getInt(ARG_FEED_ID);
+        }
     }
 
     @NonNull
@@ -60,7 +75,8 @@ public class NewFeedDialogFragment extends DialogFragment implements FeedsContra
         mUrlTV  = (TextView) mDialog.findViewById(R.id.dialog_new_feed_url);
         buildDialog(builder);
 
-        mPresenter.loadFeed(mFeedId);
+        if (mOPERATION != OPERATION.NEW)
+            mPresenter.loadFeed(mFeedId);
 
         return builder.create();
     }
@@ -81,13 +97,16 @@ public class NewFeedDialogFragment extends DialogFragment implements FeedsContra
                     public void onClick(DialogInterface dialogInterface, int i) {
                         NewFeedDialogFragment.this.getDialog().cancel();
                     }
-                })
-                .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("HONZA", "onClick: Delete");
-                    }
                 });
+
+        if (mOPERATION != OPERATION.NEW) {
+            builder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    Log.d("HONZA", "onClick: Delete");
+                }
+            });
+        }
 
         return builder;
     }
@@ -96,5 +115,10 @@ public class NewFeedDialogFragment extends DialogFragment implements FeedsContra
     public void prefillInputs(Feed feed) {
         mNameTV.setText(feed.getName());
         mUrlTV .setText(feed.getUrl());
+    }
+
+    public enum OPERATION {
+        NEW,
+        EDIT
     }
 }
