@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.util.ActivityUtils;
+import cz.drabek.feedreader.util.Injection;
 
 public class FeedActivity extends AppCompatActivity {
 
@@ -32,7 +33,11 @@ public class FeedActivity extends AppCompatActivity {
         }
 
         // Crete presenter
-//        mPresenter = new FeedPresenter();
+        mPresenter = new FeedPresenter(
+                getSupportLoaderManager(),
+                Injection.provideTasksRepository(getApplicationContext()),
+                feedFragment
+        );
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.

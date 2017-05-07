@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
+import cz.drabek.feedreader.data.Feed;
 
 /**
  * Callback interface to inform the user of network/database errors.
@@ -31,4 +32,6 @@ public interface ArticlesDataSource {
     void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback);
 
     void saveArticle(@NonNull Article article);
+
+    void saveFeed(@NonNull Feed feed);
 }

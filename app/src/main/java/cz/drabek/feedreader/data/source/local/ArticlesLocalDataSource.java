@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 
 import cz.drabek.feedreader.data.Article;
-import cz.drabek.feedreader.data.source.ArticleValues;
+import cz.drabek.feedreader.data.Feed;
 import cz.drabek.feedreader.data.source.ArticlesDataSource;
 import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
@@ -53,7 +53,15 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     public void saveArticle(@NonNull Article article) {
         checkNotNull(article);
 
-        ContentValues values = ArticleValues.from(article);
+        ContentValues values = Article.from(article);
         mContentResolver.insert(ArticlesContentProvider.CONTENT_ARTICLES_URI,values);
+    }
+
+    @Override
+    public void saveFeed(@NonNull Feed feed) {
+        checkNotNull(feed);
+
+        ContentValues values = Feed.from(feed);
+        mContentResolver.insert(ArticlesContentProvider.CONTENT_FEEDS_URI, values);
     }
 }

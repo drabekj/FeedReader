@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
+import cz.drabek.feedreader.data.Feed;
 import cz.drabek.feedreader.data.source.remote.FakeArticlesRemoteDataSource;
 import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
@@ -69,6 +70,11 @@ public class ArticlesRepository implements ArticlesDataSource {
 
     @Override
     public void saveArticle(@NonNull Article article) { }
+
+    @Override
+    public void saveFeed(@NonNull Feed feed) {
+        mArticlesLocalDataSource.saveFeed(feed);
+    }
 
     @Override
     public void getArticle(@NonNull int articleId, @NonNull final GetArticleCallback callback) {

@@ -1,5 +1,6 @@
 package cz.drabek.feedreader.data;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 
 import cz.drabek.feedreader.data.source.local.DbPersistenceContract;
@@ -69,5 +70,15 @@ public class Article {
                 DbPersistenceContract.ArticleEntry.COLUMN_NAME_CONTENT));
 
         return new Article(id, title, url, author, content);
+    }
+
+    public static ContentValues from(Article article) {
+        ContentValues values = new ContentValues();
+        values.put(DbPersistenceContract.ArticleEntry._ID, article.getId());
+        values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_TITLE, article.getTitle());
+        values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL, article.getUrl());
+        values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_AUTHOR, article.getAuthor());
+        values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_CONTENT, article.getContent());
+        return values;
     }
 }

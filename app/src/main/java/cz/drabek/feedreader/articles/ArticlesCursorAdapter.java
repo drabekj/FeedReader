@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.data.Article;
-import cz.drabek.feedreader.data.source.ArticleValues;
 
 public class ArticlesCursorAdapter extends CursorAdapter {
 

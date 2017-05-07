@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
+import cz.drabek.feedreader.data.Feed;
 import cz.drabek.feedreader.data.source.ArticlesDataSource;
 
 public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
@@ -47,7 +48,8 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
     public void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback) { }
 
     @Override
-    public void saveArticle(@NonNull Article article) {
+    public void saveArticle(@NonNull Article article) { }
 
-    }
+    @Override
+    public void saveFeed(@NonNull Feed feed) { }
 }
