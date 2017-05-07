@@ -15,6 +15,7 @@ import android.widget.TextView;
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.data.Feed;
 
+// TODO !!! DIALOG crashing app onConfigurationChange() => mPresenter nullPointer exception (mPresenter.loadFeed(mFeedId);)
 public class NewFeedDialogFragment extends DialogFragment implements FeedsContract.DialogView {
 
     private static final String ARG_FEED_ID = "feedId";
