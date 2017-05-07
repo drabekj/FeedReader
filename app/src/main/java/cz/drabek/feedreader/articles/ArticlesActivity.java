@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
+import cz.drabek.feedreader.feeds.FeedActivity;
 import cz.drabek.feedreader.util.ActivityUtils;
 import cz.drabek.feedreader.util.Injection;
 
@@ -64,14 +65,11 @@ public class ArticlesActivity extends AppCompatActivity {
                 Toast.makeText(this, "Settings not implemented yet.", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.menu_item_feeds:
-                Toast.makeText(this, "Feeds not implemented yet.", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(this, FeedConfigActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(this, FeedActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.menu_item_refresh:
-                Toast.makeText(this, "Refresh not implemented yet.", Toast.LENGTH_SHORT).show();
                 mArticlesPresenter.loadArticles();
-//                mTaskFragment.executeTaskFetchFeed();
                 return true;
             default:
                 return false;

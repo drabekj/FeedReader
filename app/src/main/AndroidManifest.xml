@@ -23,6 +23,9 @@
             android:name=".data.source.ArticlesContentProvider"
             android:authorities="cz.drabek.feedreader"
             android:exported="false"/>
+
+        <activity android:name=".feeds.FeedActivity">
+        </activity>
     </application>
 
 </manifest>
