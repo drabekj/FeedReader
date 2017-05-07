@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.source.local.ArticlesContentProvider;
@@ -46,14 +45,12 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
     }
 
     private void loadArticle() {
-        Log.d("HONZA", "loadArticle: ");
         mArticlesRepository.getArticle(mArticleId, this);
     }
 
     // TODO
     @Override
     public void onArticleLoaded(Article article) {
-        Log.d("HONZA", "onArticleLoaded: ");
         // the data is refreshed locally now but
         // we don't need this result since the CursorLoader will load it for us
         mLoaderManager.initLoader(ARTICLE_LOADER, null, this);
@@ -62,7 +59,6 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
     // TODO
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.d("HONZA", "onCreateLoader: ");
         switch (id) {
             case ARTICLE_LOADER:
                 return new CursorLoader(
@@ -77,7 +73,6 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
     // TODO
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Log.d("HONZA", "onLoadFinished: ");
         if (data != null) {
             if (data.moveToLast()) {
                 onDataLoaded(data);
@@ -93,7 +88,6 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
     public void onLoaderReset(Loader<Cursor> loader) { }
 
     private void onDataLoaded(Cursor data) {
-        Log.d("HONZA", "onDataLoaded: ");
         Article article = Article.from(data);
         mView.showArticle(article);
     }
