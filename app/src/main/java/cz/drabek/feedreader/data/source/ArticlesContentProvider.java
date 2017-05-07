@@ -24,20 +24,13 @@ public class ArticlesContentProvider extends ContentProvider {
     private static final int SOURCE_LIST = 3;
     private static final UriMatcher sURIMatcher = buildUriMatcher();
 
-    /*private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    static {
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH, ARTICLE_LIST);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", ARTICLE_ID);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/sources", SOURCE_LIST);
-    }*/
-
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
         Log.d("ArticlesContentProvider", "buildUriMatcher: |" + AUTHORITY + "|");
 
         matcher.addURI(AUTHORITY, DbPersistenceContract.ArticleEntry.TABLE_NAME, ARTICLE_LIST);
-        matcher.addURI(AUTHORITY, DbPersistenceContract.ArticleEntry.TABLE_NAME + "/*", ARTICLE_ID);
+        matcher.addURI(AUTHORITY, DbPersistenceContract.ArticleEntry.TABLE_NAME + "/#", ARTICLE_ID);
 
         return matcher;
     }

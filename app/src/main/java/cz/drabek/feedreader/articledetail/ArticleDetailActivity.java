@@ -35,6 +35,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
         // Create the presenter
         mPresenter = new ArticleDetailPresenter(
+                getApplicationContext(),
                 articleId,
                 getSupportLoaderManager(),
                 Injection.provideTasksRepository(this),

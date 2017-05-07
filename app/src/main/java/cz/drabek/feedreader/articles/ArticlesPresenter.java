@@ -15,7 +15,6 @@ import java.util.List;
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.source.ArticlesContentProvider;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
-import cz.drabek.feedreader.data.source.local.DbPersistenceContract;
 
 import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 

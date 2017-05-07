@@ -2,6 +2,8 @@ package cz.drabek.feedreader.data.source.local;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -40,8 +42,15 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     }
 
     @Override
-    public void getArticle(@NonNull String articleId, @NonNull GetArticleCallback callback) {
+    public void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback) {
+        Uri uri = Uri.withAppendedPath(ArticlesContentProvider.CONTENT_ARTICLES_URI, String.valueOf(articleId));
 
+        Cursor cursor = mContentResolver.query(
+                uri,
+                null, null, null, null);
+
+        cursor.moveToFirst();
+        callback.onArticleLoaded(Article.from(cursor));
     }
 
     @Override

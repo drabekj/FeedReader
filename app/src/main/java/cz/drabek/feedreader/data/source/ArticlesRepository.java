@@ -68,12 +68,21 @@ public class ArticlesRepository implements ArticlesDataSource {
     }
 
     @Override
-    public void saveArticle(@NonNull Article article) {
-
-    }
+    public void saveArticle(@NonNull Article article) { }
 
     @Override
-    public void getArticle(@NonNull String articleId, @NonNull GetArticleCallback callback) { }
+    public void getArticle(@NonNull int articleId, @NonNull final GetArticleCallback callback) {
+        // Get data from local storage
+        mArticlesLocalDataSource.getArticle(articleId, new GetArticleCallback() {
+            @Override
+            public void onArticleLoaded(Article article) {
+                callback.onArticleLoaded(article);
+            }
+
+            @Override
+            public void onDataNotAvailable() { }
+        });
+    }
 
     private void refreshLocalDataStorage(List<Article> articles) {
         for (Article article: articles)

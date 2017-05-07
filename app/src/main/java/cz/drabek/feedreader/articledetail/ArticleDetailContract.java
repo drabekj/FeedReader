@@ -14,6 +14,8 @@ public interface ArticleDetailContract {
 
     interface View extends BaseView<ArticleDetailContract.Presenter> {
 
+        void showArticle(Article article);
+
     }
 
     interface Presenter extends BasePresenter {
