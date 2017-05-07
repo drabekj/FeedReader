@@ -46,15 +46,8 @@ public class FeedPresenter implements FeedsContract.Presenter,
 
     @Override
     public void start() { loadFeeds(); }
-
-    // TODO
-    private void loadFeeds() {
-        // something
-        mRepository.getFeeds(this);
-
-        // show feeds
-
-    }
+    
+    private void loadFeeds() { mRepository.getFeeds(this); }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -106,7 +99,6 @@ public class FeedPresenter implements FeedsContract.Presenter,
         mView.showNoFeeds();
     }
 
-    // TODO
     @Override
     public void saveFeed(String name, String url) {
         mRepository.saveFeed(new Feed(name, url));
