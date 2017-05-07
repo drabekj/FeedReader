@@ -7,30 +7,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
-
-import cz.drabek.feedreader.data.source.local.LocalDbHelper;
-import cz.drabek.feedreader.data.source.local.DbPersistenceContract;
 
 public class ArticlesContentProvider extends ContentProvider {
 
     private LocalDbHelper mDbHelper;
     public static final String AUTHORITY = "cz.drabek.feedreader";
-    private static final String BASE_PATH = "article";
-    public static final Uri CONTENT_ARTICLES_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
-    public static final Uri CONTENT_SOURCES_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH + "/sources");
+    private static final String ARTICLE_PATH = "article";
+    private static final String FEED_PATH = "feed";
+    public static final Uri CONTENT_ARTICLES_URI = Uri.parse("content://" + AUTHORITY + "/" + ARTICLE_PATH);
+    public static final Uri CONTENT_FEEDS_URI = Uri.parse("content://" + AUTHORITY + "/" + FEED_PATH);
     private static final int ARTICLE_LIST = 1;
     private static final int ARTICLE_ID = 2;
-    private static final int SOURCE_LIST = 3;
+    private static final int FEED_LIST = 3;
     private static final UriMatcher sURIMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-        Log.d("ArticlesContentProvider", "buildUriMatcher: |" + AUTHORITY + "|");
-
         matcher.addURI(AUTHORITY, DbPersistenceContract.ArticleEntry.TABLE_NAME, ARTICLE_LIST);
         matcher.addURI(AUTHORITY, DbPersistenceContract.ArticleEntry.TABLE_NAME + "/#", ARTICLE_ID);
+        matcher.addURI(AUTHORITY, DbPersistenceContract.FeedEntry.TABLE_NAME, FEED_LIST);
 
         return matcher;
     }
@@ -104,14 +100,14 @@ public class ArticlesContentProvider extends ContentProvider {
                             new String[]{contentValues.getAsString(DbPersistenceContract.ArticleEntry._ID)}
                     );
                     if (_id > 0) {
-                        returnUri = Uri.parse(BASE_PATH + "/" + _id);
+                        returnUri = Uri.parse(ARTICLE_PATH + "/" + _id);
                     } else {
                         throw new android.database.SQLException("Failed to insert row into " + uri);
                     }
                 } else {
                     long _id = db.insert(DbPersistenceContract.ArticleEntry.TABLE_NAME, null, contentValues);
                     if (_id >= 0) {
-                        returnUri = Uri.parse(BASE_PATH + "/" + _id);
+                        returnUri = Uri.parse(ARTICLE_PATH + "/" + _id);
                     } else {
                         throw new android.database.SQLException("Failed to insert row into " + uri);
                     }
