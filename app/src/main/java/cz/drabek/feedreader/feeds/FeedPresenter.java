@@ -30,7 +30,7 @@ public class FeedPresenter implements FeedsContract.Presenter {
 
     // TODO
     private void loadFeeds() {
-        
+
     }
 
 }

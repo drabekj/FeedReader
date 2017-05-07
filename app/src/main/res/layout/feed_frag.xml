@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-        android:text="Empty fragment"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/feedsLL">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/feeds_list"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"/>
+        android:layout_centerInParent="true"
+        android:id="@+id/noFeeds">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/presence_busy"
+            android:id="@+id/no_feeds_icon"
+            android:contentDescription="@string/no_feeds_image_desc"/>
+
+        <TextView
+            android:text="@string/no_feeds_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/no_feeds_message"/>
+    </LinearLayout>
 
 </LinearLayout>

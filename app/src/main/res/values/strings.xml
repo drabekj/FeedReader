@@ -11,4 +11,6 @@
     <string name="menu_item_share">Share Article</string>
     <string name="message_share_article">Check out this awesome article</string>
     <string name="menu_item_add">Add feed source</string>
+    <string name="no_feeds_image_desc">No feeds icon</string>
+    <string name="no_feeds_message">There are no feed sources</string>
 </resources>
