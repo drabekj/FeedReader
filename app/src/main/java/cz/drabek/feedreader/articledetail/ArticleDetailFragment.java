@@ -26,6 +26,7 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
     private TextView mAuthor;
     private TextView mUrl;
     private TextView mContent;
+    private String mUrlRaw;
 
 
     public ArticleDetailFragment() {
@@ -69,7 +70,8 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
     // TODO date
     @Override
     public void showArticle(Article article) {
-        String urlString = "<a href='" + article.getUrl() + "'> "
+        mUrlRaw = article.getUrl();
+        String urlString = "<a href='" + mUrlRaw + "'> "
                 + getResources().getString(R.string.view_full_article) + " </a>";
 
         mTitle  .setText(article.getTitle());
@@ -79,5 +81,9 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mUrl    .setMovementMethod(LinkMovementMethod.getInstance());
         mUrl    .setText(Html.fromHtml(urlString));
         mContent.setText(Html.fromHtml(article.getContent()));
+    }
+
+    public String getArticleUrl() {
+        return mUrlRaw;
     }
 }

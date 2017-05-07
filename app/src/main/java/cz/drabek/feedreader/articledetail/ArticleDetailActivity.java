@@ -1,10 +1,14 @@
 package cz.drabek.feedreader.articledetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.util.ActivityUtils;
@@ -14,6 +18,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_ARTICLE_ID = "ARTICLE_ID";
     private ArticleDetailPresenter mPresenter;
+    private ArticleDetailFragment mFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,12 +30,11 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
         int articleId = getIntent().getIntExtra(EXTRA_ARTICLE_ID, 0);
 
-        ArticleDetailFragment articleDetailFragment =
-                (ArticleDetailFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        mFragment = (ArticleDetailFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
-        if (articleDetailFragment == null) {
-            articleDetailFragment = ArticleDetailFragment.newInstance(articleId);
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), articleDetailFragment, R.id.contentFrame);
+        if (mFragment == null) {
+            mFragment = ArticleDetailFragment.newInstance(articleId);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mFragment, R.id.contentFrame);
         }
 
         // Create the presenter
@@ -39,9 +43,33 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 articleId,
                 getSupportLoaderManager(),
                 Injection.provideTasksRepository(this),
-                articleDetailFragment
+                mFragment
         );
     }
 
+    // Inflate the menu; this adds items to the action bar if it is present.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_article_detail_menu, menu);
+        return true;
+    }
+
+    // TODO better getArticleUrl()
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_share:
+                String message = getResources().getString(R.string.message_share_article) + mFragment.getArticleUrl();
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                return true;
+            default:
+                return false;
+        }
+    }
 
 }
