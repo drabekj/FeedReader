@@ -42,6 +42,15 @@ public interface ArticlesDataSource {
 
     }
 
+    interface DownloadArticlesCallback {
+
+        void onArticlesDownloaded(List<Article> articles);
+
+        void onDataNotAvailable();
+    }
+
+    void downloadArticles(@NonNull List<Feed> feeds,@NonNull DownloadArticlesCallback callback);
+
     void getArticles(@NonNull LoadArticlesCallback callback);
 
     void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback);

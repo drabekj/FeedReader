@@ -8,6 +8,7 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
 import java.util.Date;
+import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.Feed;
@@ -38,9 +39,6 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     }
 
     @Override
-    public void getArticles(@NonNull LoadArticlesCallback callback) { }
-
-    @Override
     public void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback) {
         Uri uri = Uri.withAppendedPath(ArticlesContentProvider.CONTENT_ARTICLES_URI, String.valueOf(articleId));
 
@@ -56,9 +54,6 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
         ContentValues values = Article.from(article);
         mContentResolver.insert(ArticlesContentProvider.CONTENT_ARTICLES_URI,values);
     }
-
-    @Override
-    public void getFeeds(@NonNull LoadFeedsCallback callback) { }
 
     @Override
     public void getFeed(@NonNull int feedId, @NonNull GetFeedCallback callback) {
@@ -89,4 +84,12 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
                 new String[]{String.valueOf(feedId)});
     }
 
+    @Override
+    public void getArticles(@NonNull LoadArticlesCallback callback) { }
+
+    @Override
+    public void getFeeds(@NonNull LoadFeedsCallback callback) { }
+
+    @Override
+    public void downloadArticles(@NonNull List<Feed> feeds, @NonNull DownloadArticlesCallback callback) { }
 }

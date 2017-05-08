@@ -24,6 +24,7 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
                     "Title " + i,
                     "http://www.datasource" + i + ".com",
                     "Adolf " + i,
+                    "1970-1-" + String.valueOf(i),
                     "Content: " + i + " Jelly beans powder cookie dragée lemon drops sweet sweet I love marshmallow. Topping danish I love jelly beans powder jelly lollipop dessert oat cake. Danish sweet roll cheesecake. Halvah cheesecake cotton candy carrot cake icing pastry marshmallow toffee lemon drops. Powder carrot cake jelly donut cake I love. Lemon drops halvah chupa chups sweet roll. Caramels topping bonbon jelly cupcake chocolate soufflé. Macaroon jelly tiramisu I love chocolate cake dragée toffee icing. Apple pie I love tootsie roll pudding. I love sweet roll oat cake caramels powder sweet roll I love candy. Cake chocolate caramels jelly pudding cookie tart. Gummies chocolate dessert ice cream cupcake. Jelly beans lemon drops I love fruitcake icing gummies fruitcake. Sesame snaps pastry cookie."));
         }
     }
@@ -36,12 +37,15 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
     }
 
     @Override
-    public void getArticles(@NonNull LoadArticlesCallback callback) {
+    public void downloadArticles(@NonNull List<Feed> feeds, @NonNull DownloadArticlesCallback callback) {
         if (list.isEmpty())
             callback.onDataNotAvailable();
         else
-            callback.onArticlesLoaded(list);
+            callback.onArticlesDownloaded(list);
     }
+
+    @Override
+    public void getArticles(@NonNull LoadArticlesCallback callback) { }
 
     @Override
     public void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback) { }

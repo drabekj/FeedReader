@@ -75,7 +75,7 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
                 + getResources().getString(R.string.view_full_article) + " </a>";
 
         mTitle  .setText(article.getTitle());
-        mDate   .setText("1-1-1970");
+        mDate   .setText(article.getDate());
         mAuthor .setText(article.getAuthor());
         mUrl    .setClickable(true);
         mUrl    .setMovementMethod(LinkMovementMethod.getInstance());

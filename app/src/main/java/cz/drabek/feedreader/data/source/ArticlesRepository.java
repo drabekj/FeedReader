@@ -51,10 +51,12 @@ public class ArticlesRepository implements ArticlesDataSource {
 
     @Override
     public void getArticles(@NonNull final LoadArticlesCallback callback) {
+        List<Feed> feeds = null;
+
         // Load data from server
-        mArticlesRemoteDataSource.getArticles(new LoadArticlesCallback() {
+        mArticlesRemoteDataSource.downloadArticles(feeds, new DownloadArticlesCallback() {
             @Override
-            public void onArticlesLoaded(List<Article> articles) {
+            public void onArticlesDownloaded(List<Article> articles) {
                 saveToLocalDataStorage(articles);
 
                 // SHOW in view (don't need if using CP + Loader)
@@ -116,4 +118,16 @@ public class ArticlesRepository implements ArticlesDataSource {
         mArticlesLocalDataSource.deleteFeed(feedId);
     }
 
+    @Override
+    public void downloadArticles(@NonNull List<Feed> feeds, @NonNull DownloadArticlesCallback callback) {
+        mArticlesRemoteDataSource.downloadArticles(feeds, new DownloadArticlesCallback() {
+            @Override
+            public void onArticlesDownloaded(List<Article> articles) {
+                saveToLocalDataStorage(articles);
+            }
+
+            @Override
+            public void onDataNotAvailable() { }
+        });
+    }
 }

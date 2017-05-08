@@ -6,7 +6,7 @@
 
     <string name="no_articles_message">There are no articles to display.</string>
     <string name="no_articles_image_desc">No articles to show icon.</string>
-    <string name="by">by</string>
+    <string name="by">" by "</string>
     <string name="view_full_article">view full article</string>
     <string name="menu_item_share">Share Article</string>
     <string name="message_share_article">Check out this awesome article</string>

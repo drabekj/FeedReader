@@ -11,18 +11,20 @@ public class Article {
     private String mTitle;
     private String mUrl;
     private String mAuthor;
+    private String mDate;
     private String mContent;
 
-    private Article(int id, String title, String url, String author, String content) {
-        this(title, url, author, content);
+    private Article(int id, String title, String url, String author, String date, String content) {
+        this(title, url, author, date, content);
         mId = id;
     }
 
-    public Article(String title, String url, String author, String content) {
+    public Article(String title, String url, String author, String date, String content) {
         mId = -1;
         mTitle = title;
         mUrl = url;
         mAuthor = author;
+        mDate = date;
         mContent = content;
     }
 
@@ -53,6 +55,10 @@ public class Article {
         return mAuthor;
     }
 
+    public String getDate() {
+        return mDate;
+    }
+
     public String getContent() {
         return mContent;
     }
@@ -71,10 +77,12 @@ public class Article {
                 DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL));
         String author = cursor.getString(cursor.getColumnIndexOrThrow(
                 DbPersistenceContract.ArticleEntry.COLUMN_NAME_AUTHOR));
+        String date = cursor.getString(cursor.getColumnIndexOrThrow(
+                DbPersistenceContract.ArticleEntry.COLUMN_NAME_CREATION_DATE));
         String content = cursor.getString(cursor.getColumnIndexOrThrow(
                 DbPersistenceContract.ArticleEntry.COLUMN_NAME_CONTENT));
 
-        return new Article(id, title, url, author, content);
+        return new Article(id, title, url, author, date, content);
     }
 
     public static ContentValues from(Article article) {
@@ -84,6 +92,7 @@ public class Article {
         values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_TITLE, article.getTitle());
         values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_URL, article.getUrl());
         values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_AUTHOR, article.getAuthor());
+        values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_CREATION_DATE, article.getDate());
         values.put(DbPersistenceContract.ArticleEntry.COLUMN_NAME_CONTENT, article.getContent());
         return values;
     }
