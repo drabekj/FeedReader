@@ -48,8 +48,6 @@ public class ArticlesPresenter implements
         mArticlesView = checkNotNull(articlesView, "articlesView cannot be null!");
 
         mArticlesView.setPresenter(this);
-        mServiceBinder = ClientToServiceBinder.getInstance(this);
-        initiateDownloadService();
     }
 
     @Override
@@ -73,15 +71,16 @@ public class ArticlesPresenter implements
         return mContext;
     }
 
-    private void initiateDownloadService() {
+    public void initiateDownloadService() {
+        // initiate manual download service
+        mServiceBinder = ClientToServiceBinder.getInstance(this);
+        mServiceBinder.doBindService();
+
         // initiate repeating download service
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         Intent launchIntent = new Intent(mContext, DownloadBroadCastReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), DOWNLOAD_INTERVAL, pi);
-
-        // initiate manual download service
-        mServiceBinder.doBindService();
     }
 
     // TODO Why do I need to restart loader?
@@ -137,7 +136,6 @@ public class ArticlesPresenter implements
     public void onLoaderReset(Loader<Cursor> loader) { onDataReset(); }
 
     private void onDataLoaded(Cursor data) {
-        mArticlesView.setLoadingIndicator(false);
         mArticlesView.showArticles(data);
     }
 

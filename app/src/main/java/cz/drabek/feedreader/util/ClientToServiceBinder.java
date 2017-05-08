@@ -12,7 +12,6 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import cz.drabek.feedreader.articles.ArticlesPresenter;
-import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.service.DownloadService;
 
 /**

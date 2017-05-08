@@ -13,6 +13,7 @@ import android.widget.Toast;
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.feeds.FeedActivity;
 import cz.drabek.feedreader.util.ActivityUtils;
+import cz.drabek.feedreader.util.ClientToServiceBinder;
 import cz.drabek.feedreader.util.Injection;
 
 public class ArticlesActivity extends AppCompatActivity {
@@ -42,12 +43,15 @@ public class ArticlesActivity extends AppCompatActivity {
         }
 
         // Create the presenter
+        // initiate manual download service
         mArticlesPresenter = new ArticlesPresenter(
                 getApplicationContext(),
                 getSupportLoaderManager(),
                 Injection.provideTasksRepository(getApplicationContext()),
                 articlesFragment
         );
+
+        mArticlesPresenter.initiateDownloadService();
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.
