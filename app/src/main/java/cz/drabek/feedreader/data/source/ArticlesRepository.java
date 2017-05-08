@@ -8,7 +8,7 @@ import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.Feed;
-import cz.drabek.feedreader.data.source.remote.FakeArticlesRemoteDataSource;
+
 import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
 public class ArticlesRepository implements ArticlesDataSource {
@@ -55,10 +55,10 @@ public class ArticlesRepository implements ArticlesDataSource {
         mArticlesRemoteDataSource.getArticles(new LoadArticlesCallback() {
             @Override
             public void onArticlesLoaded(List<Article> articles) {
-                refreshLocalDataStorage(articles);
+                saveToLocalDataStorage(articles);
 
                 // SHOW in view (don't need if using CP + Loader)
-                callback.onArticlesLoaded(articles);
+//                callback.onArticlesLoaded(articles);
             }
 
             @Override
@@ -95,7 +95,7 @@ public class ArticlesRepository implements ArticlesDataSource {
         callback.onFeedsLoaded(null);
     }
 
-    private void refreshLocalDataStorage(List<Article> articles) {
+    private void saveToLocalDataStorage(List<Article> articles) {
         for (Article article: articles)
             mArticlesLocalDataSource.saveArticle(article);
     }

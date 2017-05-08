@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.Feed;
@@ -19,13 +20,14 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
     // Prevent direct instantiation.
     private FakeArticlesRemoteDataSource() {
         list = new ArrayList<>(20);
-
-        for (int i = 0; i < 20; i++)
+        
+        for (int i = 0; i < 20; i++) {
             list.add(new Article(
                     "Title " + i,
                     "http://www.datasource" + i + ".com",
                     "Adolf " + i,
                     "Content: " + i + " Jelly beans powder cookie dragée lemon drops sweet sweet I love marshmallow. Topping danish I love jelly beans powder jelly lollipop dessert oat cake. Danish sweet roll cheesecake. Halvah cheesecake cotton candy carrot cake icing pastry marshmallow toffee lemon drops. Powder carrot cake jelly donut cake I love. Lemon drops halvah chupa chups sweet roll. Caramels topping bonbon jelly cupcake chocolate soufflé. Macaroon jelly tiramisu I love chocolate cake dragée toffee icing. Apple pie I love tootsie roll pudding. I love sweet roll oat cake caramels powder sweet roll I love candy. Cake chocolate caramels jelly pudding cookie tart. Gummies chocolate dessert ice cream cupcake. Jelly beans lemon drops I love fruitcake icing gummies fruitcake. Sesame snaps pastry cookie."));
+        }
     }
 
     public static FakeArticlesRemoteDataSource getInstance() {

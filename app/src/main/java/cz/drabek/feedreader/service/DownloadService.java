@@ -116,7 +116,6 @@ public class DownloadService extends Service {
         Runnable r = new DownloadingRunnable();
         Thread thread = new Thread(r);
         thread.start();
-
     }
 
 
