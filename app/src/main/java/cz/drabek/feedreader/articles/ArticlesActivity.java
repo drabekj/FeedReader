@@ -75,6 +75,7 @@ public class ArticlesActivity extends AppCompatActivity {
         }
     }
 
+    // TODO loading indicator reset onConfigurationChange()
     public void setLoadingIndicator(boolean activated) {
         // TODO fix so that this if is not needed
         if (mProgressBar == null || mToolbar == null || mToolbar.findViewById(R.id.menu_item_refresh) == null)

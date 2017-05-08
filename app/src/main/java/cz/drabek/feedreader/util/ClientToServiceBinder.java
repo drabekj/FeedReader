@@ -61,6 +61,9 @@ public class ClientToServiceBinder {
                     Log.d(TAG, "handleMessage: Client received from service: MSG_LOAD_FINISHED=" + msg.arg1);
                     mPresenter.onServiceActive(false);
                     break;
+                case DownloadService.MSG_IS_WORKING:
+                    boolean isWorking = (msg.arg1 == 1);
+                    mPresenter.onServiceActive(isWorking);
                 default:
                     super.handleMessage(msg);
             }
@@ -158,6 +161,11 @@ public class ClientToServiceBinder {
         Message msg = Message.obtain(null, DownloadService.MSG_START_SERVICE, 0, 0);
         sendMessage(msg);
         return true;
+    }
+
+    public void getServiceStatus() {
+        Message msg = Message.obtain(null, DownloadService.MSG_IS_WORKING, 0, 0);
+        sendMessage(msg);
     }
 
 }

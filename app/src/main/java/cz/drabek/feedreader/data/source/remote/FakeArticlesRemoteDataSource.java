@@ -1,11 +1,9 @@
 package cz.drabek.feedreader.data.source.remote;
 
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.Feed;
@@ -20,7 +18,7 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
     // Prevent direct instantiation.
     private FakeArticlesRemoteDataSource() {
         list = new ArrayList<>(20);
-        
+
         for (int i = 0; i < 20; i++) {
             list.add(new Article(
                     "Title " + i,

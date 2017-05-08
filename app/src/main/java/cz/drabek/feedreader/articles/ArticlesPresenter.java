@@ -53,7 +53,9 @@ public class ArticlesPresenter implements
     }
 
     @Override
-    public void start() { }
+    public void start() {
+        loadArticles();
+    }
 
     /**
      * Starts service and refreshes articles.
@@ -156,4 +158,5 @@ public class ArticlesPresenter implements
         onArticlesLoaded(null);
         mArticlesView.setLoadingIndicator(active);
     }
+
 }

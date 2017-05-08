@@ -33,7 +33,8 @@ public class DownloadService extends Service {
     public static final int MSG_UNREGISTER_CLIENT = 2;
     public static final int MSG_SET_VALUE = 3;
     public static final int MSG_START_SERVICE = 4;
-    public static final int MSG_SAY_HELLO = 5;
+    public static final int MSG_IS_WORKING = 5;
+    public static final int MSG_SAY_HELLO = 6;
 
     List<Messenger> mClients = new ArrayList<Messenger>();
     /** Holds last value set by a client. */
@@ -43,6 +44,7 @@ public class DownloadService extends Service {
      * Target we publish for clients to send messages to IncomingHandler.
      */
     final Messenger mMessenger = new Messenger(new IncomingHandler());
+    private Thread mThread;
 
 
     /**
@@ -69,6 +71,10 @@ public class DownloadService extends Service {
                     break;
                 case MSG_SAY_HELLO:
                     Toast.makeText(getApplicationContext(), "hello!", Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_IS_WORKING:
+                    mValue =  isWorking() ? 1 : 0;
+                    sendMsg(Message.obtain(null, MSG_IS_WORKING, mValue, 0));
                     break;
                 default:
                     super.handleMessage(msg);
@@ -105,30 +111,28 @@ public class DownloadService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.w("HONZA", "onStartCommand: Service started");
-        // do something
         startDownload();
-
         return START_STICKY;
     }
 
     private void startDownload() {
         Runnable r = new DownloadingRunnable();
-        Thread thread = new Thread(r);
-        thread.start();
+        mThread = new Thread(r);
+        mThread.start();
     }
 
 
     class DownloadingRunnable implements Runnable, ArticlesDataSource.LoadArticlesCallback {
         @Override
         public void run() {
+            Log.w("HONZA", "startDownload run: Service started");
             ArticlesRepository repository = Injection.provideTasksRepository(getApplicationContext());
             repository.getArticles(this);
 
             SystemClock.sleep(5000);
-            Log.w("HONZA", "startDownload run: Service finished - articles downloaded");
             int value = 1;
             sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, value, 0));
+            Log.w("HONZA", "startDownload run: Service finished - articles downloaded");
         }
 
         // implemented in ArticlesRepository - getArticles()
@@ -136,5 +140,9 @@ public class DownloadService extends Service {
         public void onArticlesLoaded(List<Article> articles) { }
         @Override
         public void onDataNotAvailable() { }
+    }
+
+    private boolean isWorking() {
+        return mThread.isAlive();
     }
 }
