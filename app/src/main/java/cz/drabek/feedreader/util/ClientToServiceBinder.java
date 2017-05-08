@@ -29,9 +29,9 @@ public class ClientToServiceBinder {
     private static ClientToServiceBinder INSTANCE = null;
     public static final int MSG_LOAD_FINISHED = 1;
 
-    private static ArticlesPresenter mPresenter;
-    public Messenger mService = null;
-    public boolean mIsBound = false;
+    private ArticlesPresenter mPresenter;
+    private Messenger mService = null;
+    private boolean mIsBound = false;
 
     private ClientToServiceBinder() { }
 
@@ -39,8 +39,12 @@ public class ClientToServiceBinder {
         if (INSTANCE == null)
             INSTANCE = new ClientToServiceBinder();
 
-        mPresenter = presenter;
+        INSTANCE.setPresenter(presenter);
         return INSTANCE;
+    }
+
+    private void setPresenter (ArticlesPresenter presenter) {
+        mPresenter = presenter;
     }
 
     /**
@@ -142,6 +146,10 @@ public class ClientToServiceBinder {
         }
     }
 
+    /**
+     * Fetches articles to DB
+     * @return  success
+     */
     public boolean startService() {
         if (!isBound())
             return false;

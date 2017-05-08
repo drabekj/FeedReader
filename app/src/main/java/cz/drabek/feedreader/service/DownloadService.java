@@ -113,45 +113,29 @@ public class DownloadService extends Service {
     }
 
     private void startDownload() {
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                SystemClock.sleep(5000);
-                Log.w("HONZA", "startDownload run: Service finished");
-                int value = 1;
-                sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, value, 0));
-            }
-        };
+        Runnable r = new DownloadingRunnable();
         Thread thread = new Thread(r);
         thread.start();
+
     }
 
-//-------------------------------------------------------------------------------------------------
-    //    ArticlesRepository mRepository;
-//
-//    @Override
-//    public IBinder onBind(Intent intent) {
-//        return null;
-//    }
-//
-//    @Override
-//    protected void onHandleIntent(Intent intent) {
-//        Log.d("HONZA", "DownloadService - onHandleIntent -  notify UI: showLoadingIndicator(true)");
-//
-//        mRepository = Injection.provideTasksRepository(getApplicationContext());
-//
-//        mRepository.getArticles(this);
-//        // test fake loading
-//        mRepository.testServiceSaveDate();
-//    }
-//
-//    @Override
-//    public void onArticlesLoaded(List<Article> articles) {
-//        Log.d("HONZA", "DownloadService - onArticlesLoaded - notify UI: showLoadingIndicator(false)");
-//    }
-//
-//    @Override
-//    public void onDataNotAvailable() {
-//        Log.d("HONZA", "onDataNotAvailable: error");
-//    }
+
+    class DownloadingRunnable implements Runnable, ArticlesDataSource.LoadArticlesCallback {
+        @Override
+        public void run() {
+            ArticlesRepository repository = Injection.provideTasksRepository(getApplicationContext());
+            repository.getArticles(this);
+
+            SystemClock.sleep(5000);
+            Log.w("HONZA", "startDownload run: Service finished - articles downloaded");
+            int value = 1;
+            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, value, 0));
+        }
+
+        // implemented in ArticlesRepository - getArticles()
+        @Override
+        public void onArticlesLoaded(List<Article> articles) { }
+        @Override
+        public void onDataNotAvailable() { }
+    }
 }

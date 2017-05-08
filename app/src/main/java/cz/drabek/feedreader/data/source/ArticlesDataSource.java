@@ -56,5 +56,4 @@ public interface ArticlesDataSource {
 
     void deleteFeed(@NonNull int feedId);
 
-    void testServiceSaveDate();
 }

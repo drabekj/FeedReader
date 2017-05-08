@@ -89,10 +89,4 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
                 new String[]{String.valueOf(feedId)});
     }
 
-    @Override
-    public void testServiceSaveDate() {
-        String time = (new Date(System.currentTimeMillis())).toString();
-        ContentValues values = Article.from(new Article("Service fetching", time, "", ""));
-        mContentResolver.insert(ArticlesContentProvider.CONTENT_ARTICLES_URI,values);
-    }
 }

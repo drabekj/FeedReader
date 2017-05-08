@@ -116,7 +116,4 @@ public class ArticlesRepository implements ArticlesDataSource {
         mArticlesLocalDataSource.deleteFeed(feedId);
     }
 
-    public void testServiceSaveDate() {
-        mArticlesLocalDataSource.testServiceSaveDate();
-    }
 }
