@@ -58,7 +58,7 @@ public class ArticlesRepository implements ArticlesDataSource {
                 refreshLocalDataStorage(articles);
 
                 // SHOW in view (don't need if using CP + Loader)
-                callback.onArticlesLoaded(null);
+                callback.onArticlesLoaded(articles);
             }
 
             @Override
@@ -114,5 +114,9 @@ public class ArticlesRepository implements ArticlesDataSource {
     @Override
     public void deleteFeed(@NonNull int feedId) {
         mArticlesLocalDataSource.deleteFeed(feedId);
+    }
+
+    public void testServiceSaveDate() {
+        mArticlesLocalDataSource.testServiceSaveDate();
     }
 }

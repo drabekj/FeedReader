@@ -3,6 +3,7 @@
           package="cz.drabek.feedreader">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -13,12 +14,12 @@
         <activity android:name=".articles.ArticlesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".articledetail.ArticleDetailActivity"/>
-
+        <service android:name=".service.DownloadService" android:enabled="true"/>
+        <receiver android:name=".service.DownloadBroadCastReceiver"/>
         <provider
             android:name=".data.source.local.ArticlesContentProvider"
             android:authorities="cz.drabek.feedreader"

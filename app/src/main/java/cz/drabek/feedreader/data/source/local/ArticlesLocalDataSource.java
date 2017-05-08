@@ -4,7 +4,10 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
+
+import java.util.Date;
 
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.Feed;
@@ -84,5 +87,12 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
                 uri,
                 DbPersistenceContract.FeedEntry._ID + " = ?",
                 new String[]{String.valueOf(feedId)});
+    }
+
+    @Override
+    public void testServiceSaveDate() {
+        String time = (new Date(System.currentTimeMillis())).toString();
+        ContentValues values = Article.from(new Article("Service fetching", time, "", ""));
+        mContentResolver.insert(ArticlesContentProvider.CONTENT_ARTICLES_URI,values);
     }
 }

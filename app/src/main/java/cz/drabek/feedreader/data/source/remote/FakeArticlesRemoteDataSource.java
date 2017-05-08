@@ -60,4 +60,7 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
 
     @Override
     public void deleteFeed(@NonNull int feedId) { }
+
+    @Override
+    public void testServiceSaveDate() { }
 }

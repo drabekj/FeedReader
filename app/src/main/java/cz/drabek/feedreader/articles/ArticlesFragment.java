@@ -30,7 +30,6 @@ public class ArticlesFragment extends Fragment
     private ArticleItemListener mItemListener = new ArticleItemListener() {
         @Override
         public void onArticleClick(Article clickedArticle) {
-            Toast.makeText(getContext(), "Article " + clickedArticle.getId(), Toast.LENGTH_SHORT).show();
             mPresenter.openArticleDetails(clickedArticle);
         }
     };
@@ -97,7 +96,7 @@ public class ArticlesFragment extends Fragment
     }
 
     @Override
-    public void showTasks(Cursor articles) {
+    public void showArticles(Cursor articles) {
         mListAdapter.swapCursor(articles);
 
         mArticlesView.setVisibility(View.VISIBLE);
@@ -105,7 +104,7 @@ public class ArticlesFragment extends Fragment
     }
 
     @Override
-    public void showNoTasks() {
+    public void showNoArticles() {
         mArticlesView.setVisibility(View.GONE);
         mNoArticlesView.setVisibility(View.VISIBLE);
     }

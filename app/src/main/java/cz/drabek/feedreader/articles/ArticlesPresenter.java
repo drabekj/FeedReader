@@ -1,6 +1,7 @@
 package cz.drabek.feedreader.articles;
 
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,11 +26,13 @@ public class ArticlesPresenter implements
 
     private final static String TAG = "ArticlesPresenter";
     public final static int ARTICLES_LOADER = 1;
+    private static final long DOWNLOAD_INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES / (15 * 6);
 
     private Context mContext;
     private LoaderManager mLoaderManager;
     private ArticlesRepository mArticlesRepository;
     private ArticlesContract.View mArticlesView;
+//    private ClientToServiceBinder mServiceBinder;
 
     public ArticlesPresenter(@NonNull Context context,
                              @NonNull LoaderManager loaderManager,
@@ -41,6 +44,7 @@ public class ArticlesPresenter implements
         mArticlesView = checkNotNull(articlesView, "articlesView cannot be null!");
 
         mArticlesView.setPresenter(this);
+//        mServiceBinder = new ClientToServiceBinder(this);
     }
 
     @Override
@@ -50,9 +54,24 @@ public class ArticlesPresenter implements
 
     @Override
     public void loadArticles() {
-        mArticlesView.setLoadingIndicator(true);
-        mArticlesRepository.getArticles(this);
+//        mArticlesView.setLoadingIndicator(true);
+//        mArticlesRepository.getArticles(this);
     }
+
+    public Context getContext() {
+        return mContext;
+    }
+
+//    private void initiateDownloadService() {
+//        // initiate repeating download service
+//        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+//        Intent launchIntent = new Intent(mContext, DownloadBroadCastReceiver.class);
+//        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), DOWNLOAD_INTERVAL, pi);
+//
+//        // initiate manual download service
+//        mServiceBinder.doBindService();
+//    }
 
     // TODO Why do I need to restart loader?
     /**
@@ -107,20 +126,24 @@ public class ArticlesPresenter implements
     public void onLoaderReset(Loader<Cursor> loader) { onDataReset(); }
 
     private void onDataLoaded(Cursor data) {
-        mArticlesView.setLoadingIndicator(false);
-        mArticlesView.showTasks(data);
+//        mArticlesView.setLoadingIndicator(false);
+        mArticlesView.showArticles(data);
     }
 
     private void onDataEmpty() {
         mArticlesView.setLoadingIndicator(false);
-        mArticlesView.showNoTasks();
+        mArticlesView.showNoArticles();
     }
 
-    private void onDataReset() { mArticlesView.showTasks(null); }
+    private void onDataReset() { mArticlesView.showArticles(null); }
 
     @Override
     public void openArticleDetails(@NonNull Article requestedArticle) {
         checkNotNull(requestedArticle, "requestedArticle cannot be null!");
         mArticlesView.showArticleDetailsUi(requestedArticle);
+    }
+
+    public void onServiceActive(boolean active) {
+        mArticlesView.setLoadingIndicator(active);
     }
 }

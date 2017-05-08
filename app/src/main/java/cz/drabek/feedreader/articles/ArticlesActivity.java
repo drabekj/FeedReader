@@ -1,9 +1,17 @@
 package cz.drabek.feedreader.articles;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.Messenger;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,11 +21,17 @@ import android.widget.Toast;
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
 import cz.drabek.feedreader.feeds.FeedActivity;
+import cz.drabek.feedreader.service.DownloadBroadCastReceiver;
+import cz.drabek.feedreader.service.DownloadService;
 import cz.drabek.feedreader.util.ActivityUtils;
+import cz.drabek.feedreader.util.ClientToServiceBinder;
 import cz.drabek.feedreader.util.Injection;
 
 public class ArticlesActivity extends AppCompatActivity {
 
+    private static final long DOWNLOAD_INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES / (15 * 6);
+
+    private ClientToServiceBinder mServiceBinder;
     private ArticlesPresenter mArticlesPresenter;
     private ProgressBar mProgressBar;
     private Toolbar mToolbar;
@@ -49,6 +63,17 @@ public class ArticlesActivity extends AppCompatActivity {
                 Injection.provideTasksRepository(getApplicationContext()),
                 articlesFragment
         );
+
+        // Start service
+//        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        Intent launchIntent = new Intent(ArticlesActivity.this.getApplicationContext(), DownloadBroadCastReceiver.class);
+//        PendingIntent pi = PendingIntent.getBroadcast(ArticlesActivity.this.getApplicationContext(),
+//                0, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+//        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), DOWNLOAD_INTERVAL,
+//                pi);
+//        Log.d("HONZA", "ArticlesActivity - alarm set up");
+        mServiceBinder = ClientToServiceBinder.getInstance(mArticlesPresenter);
+        initiateDownloadService();
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.
@@ -69,6 +94,7 @@ public class ArticlesActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.menu_item_refresh:
+                mServiceBinder.startService();
                 mArticlesPresenter.loadArticles();
                 return true;
             default:
@@ -91,4 +117,14 @@ public class ArticlesActivity extends AppCompatActivity {
         }
     }
 
+    private void initiateDownloadService() {
+        // initiate repeating download service
+        AlarmManager am = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        Intent launchIntent = new Intent(getApplicationContext(), DownloadBroadCastReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 0, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), DOWNLOAD_INTERVAL, pi);
+
+        // initiate manual download service
+        mServiceBinder.doBindService();
+    }
 }
