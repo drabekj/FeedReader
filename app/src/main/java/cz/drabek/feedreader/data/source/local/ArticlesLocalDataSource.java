@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -88,7 +89,19 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     public void getArticles(@NonNull LoadArticlesCallback callback) { }
 
     @Override
-    public void getFeeds(@NonNull LoadFeedsCallback callback) { }
+    public void getFeeds(@NonNull LoadFeedsCallback callback) {
+        List<Feed> feeds = new ArrayList<>();
+
+        Cursor cursor = mContentResolver.query(ArticlesContentProvider.CONTENT_FEEDS_URI, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()){
+            do {
+                feeds.add(Feed.from(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        callback.onFeedsLoaded(feeds);
+    }
 
     @Override
     public void downloadArticles(@NonNull List<Feed> feeds, @NonNull DownloadArticlesCallback callback) { }

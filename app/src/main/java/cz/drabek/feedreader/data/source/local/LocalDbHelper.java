@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 
 public class LocalDbHelper extends SQLiteOpenHelper implements BaseColumns {
 
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "FeedReader.db";
 
     public LocalDbHelper(Context context) {

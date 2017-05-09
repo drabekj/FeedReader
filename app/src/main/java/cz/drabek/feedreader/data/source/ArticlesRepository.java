@@ -51,21 +51,27 @@ public class ArticlesRepository implements ArticlesDataSource {
 
     @Override
     public void getArticles(@NonNull final LoadArticlesCallback callback) {
-        List<Feed> feeds = null;
-
-        // Load data from server
-        mArticlesRemoteDataSource.downloadArticles(feeds, new DownloadArticlesCallback() {
+        // Get all registered feeds
+        mArticlesLocalDataSource.getFeeds(new LoadFeedsCallback() {
             @Override
-            public void onArticlesDownloaded(List<Article> articles) {
-                saveToLocalDataStorage(articles);
+            public void onFeedsLoaded(List<Feed> feeds) {
+                // Load data from server
+                mArticlesRemoteDataSource.downloadArticles(feeds, new DownloadArticlesCallback() {
+                    @Override
+                    public void onArticlesDownloaded(List<Article> articles) {
+                        saveToLocalDataStorage(articles);
+                    }
 
-                // SHOW in view (don't need if using CP + Loader)
-//                callback.onArticlesLoaded(articles);
+                    @Override
+                    public void onDataNotAvailable() {
+                        Log.w(TAG, "onDataNotAvailable: there was an error loading data");
+                    }
+                });
             }
 
             @Override
             public void onDataNotAvailable() {
-                Log.w(TAG, "onDataNotAvailable: there was an error loading data");
+
             }
         });
     }
