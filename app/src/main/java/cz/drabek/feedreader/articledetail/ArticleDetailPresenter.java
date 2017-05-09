@@ -65,7 +65,8 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
      */
     @Override
     public void onArticleLoaded(Article article) {
-        mLoaderManager.initLoader(ARTICLE_LOADER, null, this);
+        mLoaderManager.restartLoader(ARTICLE_LOADER, null, this);
+//        mLoaderManager.initLoader(ARTICLE_LOADER, null, this);
     }
 
     @Override
@@ -106,6 +107,8 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
 
     // TODO - low priority
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) { }
+    public void onLoaderReset(Loader<Cursor> loader) {
+        loader.reset();
+    }
 
 }

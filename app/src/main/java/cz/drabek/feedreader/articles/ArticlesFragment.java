@@ -14,7 +14,11 @@ import android.widget.ListView;
 
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.articledetail.ArticleDetailActivity;
+import cz.drabek.feedreader.articledetail.ArticleDetailContract;
+import cz.drabek.feedreader.articledetail.ArticleDetailFragment;
+import cz.drabek.feedreader.articledetail.ArticleDetailPresenter;
 import cz.drabek.feedreader.data.Article;
+import cz.drabek.feedreader.util.Injection;
 
 public class ArticlesFragment extends Fragment implements ArticlesContract.View {
 
@@ -100,9 +104,32 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
     public void showArticleDetailsUi(Article article) {
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
         // to show some Intent stubbing.
+        if (getActivity().findViewById(R.id.detailContentFrame) != null)
+            createForTablet(article);
+        else
+            createNewActivity(article);
+    }
+
+    private void createNewActivity(Article article) {
         Intent intent = new Intent(getContext(), ArticleDetailActivity.class);
         intent.putExtra(ArticleDetailActivity.EXTRA_ARTICLE_ID, article.getId());
         startActivity(intent);
+    }
+
+    private void createForTablet(Article article) {
+        ArticleDetailFragment detailFrag = ArticleDetailFragment.newInstance();
+        // create presenter
+        ArticleDetailContract.Presenter presenter = new ArticleDetailPresenter(
+                getContext(),
+                getLoaderManager(),
+                Injection.provideTasksRepository(getContext()),
+                detailFrag);
+        presenter.setArticleId(article.getId());
+
+        detailFrag.setPresenter(presenter);
+
+        getActivity().getSupportFragmentManager().beginTransaction().
+                replace(R.id.detailContentFrame, detailFrag).commit();
     }
 
     @Override
