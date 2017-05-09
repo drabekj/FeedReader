@@ -86,7 +86,6 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
         }
     }
 
-    // TODO
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data != null) {
@@ -100,13 +99,13 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
         }
     }
 
-    // TODO - low priority
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) { }
-
     private void onDataLoaded(Cursor data) {
         Article article = Article.from(data);
         mView.showArticle(article);
     }
+
+    // TODO - low priority
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) { }
 
 }
