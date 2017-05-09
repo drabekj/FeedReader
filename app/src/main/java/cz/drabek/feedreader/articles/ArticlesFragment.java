@@ -99,11 +99,8 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
      * Depending on UI, either launch new activity or refresh fragment for the {@param article}
      * @param article   To be displayed in view.
      */
-    // TODO tablets UI
     @Override
     public void showArticleDetailsUi(Article article) {
-        // in it's own Activity, since it makes more sense that way and it gives us the flexibility
-        // to show some Intent stubbing.
         if (getActivity().findViewById(R.id.detailContentFrame) != null)
             createForTablet(article);
         else
