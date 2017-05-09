@@ -11,6 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
+import cz.drabek.feedreader.articledetail.ArticleDetailContract;
+import cz.drabek.feedreader.articledetail.ArticleDetailFragment;
+import cz.drabek.feedreader.articledetail.ArticleDetailPresenter;
 import cz.drabek.feedreader.feeds.FeedActivity;
 import cz.drabek.feedreader.util.ActivityUtils;
 import cz.drabek.feedreader.util.Injection;
@@ -18,8 +21,10 @@ import cz.drabek.feedreader.util.Injection;
 public class ArticlesActivity extends AppCompatActivity {
 
     private ArticlesContract.Presenter mArticlesPresenter;
+    private ArticleDetailContract.Presenter mDetailPresenter;
     private ProgressBar mProgressBar;
     private Toolbar mToolbar;
+    private boolean isTablet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +54,38 @@ public class ArticlesActivity extends AppCompatActivity {
                 articlesFragment
         );
 
+        // TABLET UI
+        if (findViewById(R.id.detailContentFrame) != null) {
+            isTablet = true;
+            setupDetailFrag();
+        }
+
+
+
         mArticlesPresenter.initiateDownloadService();
     }
 
-    // Inflate the menu; this adds items to the action bar if it is present.
+    // TODO - handle detailFragment.newInstance(int ID) => not necessary id
+    private void setupDetailFrag() {
+        ArticleDetailFragment detailFragment =
+                (ArticleDetailFragment) getSupportFragmentManager().findFragmentById(R.id.detailContentFrame);
+
+        if (detailFragment == null) {
+            // Create the fragment
+            detailFragment = ArticleDetailFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), detailFragment, R.id.detailContentFrame);
+        }
+
+        // Create the presenter
+        mDetailPresenter = new ArticleDetailPresenter(
+                getApplicationContext(),
+                id,
+                getSupportLoaderManager(),
+                Injection.provideTasksRepository(getApplicationContext()),
+                detailFragment
+        );
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
