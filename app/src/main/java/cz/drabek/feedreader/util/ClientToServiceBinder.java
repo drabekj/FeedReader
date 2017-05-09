@@ -26,7 +26,8 @@ public class ClientToServiceBinder {
 
     private static final String TAG = "HONZA";
     private static ClientToServiceBinder INSTANCE = null;
-    public static final int MSG_LOAD_FINISHED = 1;
+    public static final int MSG_LOAD_STARTED = 1;
+    public static final int MSG_LOAD_FINISHED = 2;
 
     private ArticlesPresenter mPresenter;
     private Messenger mService = null;
@@ -55,6 +56,10 @@ public class ClientToServiceBinder {
             switch (msg.what) {
                 case DownloadService.MSG_SET_VALUE:
                     Log.d(TAG, "handleMessage: Client received from service: " + msg.arg1);
+                    break;
+                case MSG_LOAD_STARTED:
+                    Log.d(TAG, "handleMessage: Client received from service: MSG_LOAD_STARTED=" + msg.arg1);
+                    mPresenter.onServiceActive(true);
                     break;
                 case MSG_LOAD_FINISHED:
                     Log.d(TAG, "handleMessage: Client received from service: MSG_LOAD_FINISHED=" + msg.arg1);

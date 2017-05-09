@@ -118,13 +118,12 @@ public class DownloadService extends Service {
     class DownloadingRunnable implements Runnable, ArticlesDataSource.LoadArticlesCallback {
         @Override
         public void run() {
-            Log.w("HONZA", "startDownload run: Service started");
+            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_STARTED, 1, 0));
+
             ArticlesRepository repository = Injection.provideTasksRepository(getApplicationContext());
             repository.getArticles(this);
 
-            int value = 1;
-            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, value, 0));
-            Log.w("HONZA", "startDownload run: Service finished - articles downloaded");
+            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, 1, 0));
         }
 
         // implemented in ArticlesRepository - getArticles()
