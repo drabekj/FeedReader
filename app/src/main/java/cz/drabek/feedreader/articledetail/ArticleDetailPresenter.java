@@ -44,19 +44,23 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
         loadArticle();
     }
 
+    /**
+     * Load article which should be displayed in view.
+     */
     private void loadArticle() {
         mArticlesRepository.getArticle(mArticleId, this);
     }
 
-    // TODO
+    /**
+     * Data gets loaded by Loader, no need to use {@param article}
+     *
+     * @param article   loaded article (not needed)
+     */
     @Override
     public void onArticleLoaded(Article article) {
-        // the data is refreshed locally now but
-        // we don't need this result since the CursorLoader will load it for us
         mLoaderManager.initLoader(ARTICLE_LOADER, null, this);
     }
 
-    // TODO
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
@@ -77,13 +81,14 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
             if (data.moveToLast()) {
                 onDataLoaded(data);
             } else {
-                onDataEmpty();
+                // data empty
             }
         } else {
             onDataNotAvailable();
         }
     }
 
+    // TODO - low priority
     @Override
     public void onLoaderReset(Loader<Cursor> loader) { }
 
@@ -92,10 +97,7 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
         mView.showArticle(article);
     }
 
-    // TODO
-    private void onDataEmpty() { }
-
-    // TODO
+    // TODO - low priority
     @Override
     public void onDataNotAvailable() { }
 

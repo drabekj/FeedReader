@@ -33,8 +33,6 @@ public class DownloadService extends Service {
     public static final int MSG_UNREGISTER_CLIENT = 2;
     public static final int MSG_SET_VALUE = 3;
     public static final int MSG_START_SERVICE = 4;
-    public static final int MSG_IS_WORKING = 5;
-    public static final int MSG_SAY_HELLO = 6;
 
     List<Messenger> mClients = new ArrayList<Messenger>();
     /** Holds last value set by a client. */
@@ -67,13 +65,6 @@ public class DownloadService extends Service {
                     Log.d("HONZA", "handleMessage: Service received from client: " + mValue++);
                     sendMsg(Message.obtain(null, MSG_SET_VALUE, mValue, 0));
                     break;
-                case MSG_SAY_HELLO:
-                    Toast.makeText(getApplicationContext(), "hello!", Toast.LENGTH_SHORT).show();
-                    break;
-//                case MSG_IS_WORKING:
-//                    mValue =  isWorking() ? 1 : 0;
-//                    sendMsg(Message.obtain(null, MSG_IS_WORKING, mValue, 0));
-//                    break;
                 default:
                     super.handleMessage(msg);
             }
@@ -143,7 +134,4 @@ public class DownloadService extends Service {
         public void onDataNotAvailable() { }
     }
 
-//    private boolean isWorking() {
-//        return mThread.isAlive();
-//    }
 }

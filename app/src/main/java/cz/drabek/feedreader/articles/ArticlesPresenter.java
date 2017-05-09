@@ -25,7 +25,6 @@ import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
 public class ArticlesPresenter implements
         ArticlesContract.Presenter, ArticlesRepository.LoadArticlesCallback,
-        ArticlesRepository.GetArticleCallback,
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private final static String TAG = "HONZA-ArticlesPresenter";
@@ -50,6 +49,23 @@ public class ArticlesPresenter implements
         mArticlesView.setPresenter(this);
     }
 
+    public Context getContext() {
+        return mContext;
+    }
+
+    @Override
+    public void initiateDownloadService() {
+        // initiate manual download service
+        mServiceBinder = ClientToServiceBinder.getInstance(this);
+        mServiceBinder.doBindService();
+
+        // initiate repeating download service
+        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        Intent launchIntent = new Intent(mContext, DownloadBroadCastReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), DOWNLOAD_INTERVAL, pi);
+    }
+
     @Override
     public void start() {
         loadArticles();
@@ -64,27 +80,12 @@ public class ArticlesPresenter implements
         mServiceBinder.startService();
     }
 
-    public Context getContext() {
-        return mContext;
-    }
-
-    public void initiateDownloadService() {
-        // initiate manual download service
-        mServiceBinder = ClientToServiceBinder.getInstance(this);
-        mServiceBinder.doBindService();
-
-        // initiate repeating download service
-        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        Intent launchIntent = new Intent(mContext, DownloadBroadCastReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), DOWNLOAD_INTERVAL, pi);
-    }
-
     // TODO Why do I need to restart loader?
     /**
-     * Articles saved to local storage.
+     * Callback: Articles downloaded and saved to local storage.
+     * Using loader, that makes {@param articles} useless
      *
-     * @param articles  Saved articles
+     * @param articles  Saved articles (can be null)
      */
     @Override
     public void onArticlesLoaded(List<Article> articles) {
@@ -95,14 +96,38 @@ public class ArticlesPresenter implements
             mLoaderManager.restartLoader(ARTICLES_LOADER, null, this);
     }
 
-    @Override
-    public void onArticleLoaded(Article article) { }
-
+    /**
+     * Callback: Data not available.
+     */
     @Override
     public void onDataNotAvailable() {
         Log.d(TAG, "onDataNotAvailable: ");
     }
 
+    /**
+     * Request to open {@param requestedArticle} in article detail view.
+     *
+     * @param requestedArticle  Article to be displayed in detail view
+     */
+    @Override
+    public void openArticleDetails(@NonNull Article requestedArticle) {
+        checkNotNull(requestedArticle, "requestedArticle cannot be null!");
+        mArticlesView.showArticleDetailsUi(requestedArticle);
+    }
+
+    /**
+     * Service state changed.
+     * Loads new data if service finished work.
+     * @param active
+     */
+    @Override
+    public void onServiceActive(boolean active) {
+        if (!active)
+            onArticlesLoaded(null);
+        mArticlesView.setLoadingIndicator(active);
+    }
+
+    // Loader method
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
@@ -116,6 +141,7 @@ public class ArticlesPresenter implements
         return null;
     }
 
+    // Loader method
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data != null) {
@@ -129,33 +155,20 @@ public class ArticlesPresenter implements
         }
     }
 
+    // Loader method
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) { onDataReset(); }
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mArticlesView.showArticles(null);
+    }
 
+    // Data loaded by Loader and are ready to be refreshed (cursor swap)
     private void onDataLoaded(Cursor data) {
         mArticlesView.showArticles(data);
     }
 
+    // Data loaded by Loader and are empty
     private void onDataEmpty() {
-        mArticlesView.setLoadingIndicator(false);
         mArticlesView.showNoArticles();
-    }
-
-    private void onDataReset() { mArticlesView.showArticles(null); }
-
-    @Override
-    public void openArticleDetails(@NonNull Article requestedArticle) {
-        checkNotNull(requestedArticle, "requestedArticle cannot be null!");
-        mArticlesView.showArticleDetailsUi(requestedArticle);
-    }
-
-    public void onServiceActive(boolean active) {
-        onArticlesLoaded(null);
-        mArticlesView.setLoadingIndicator(active);
-    }
-
-    public void unbindService() {
-        mServiceBinder.doUnbindService();
     }
 
 }

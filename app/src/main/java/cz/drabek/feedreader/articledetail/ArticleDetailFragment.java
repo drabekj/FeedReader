@@ -44,7 +44,11 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         return fragment;
     }
 
-    // TODO implement onCreateView
+    @Override
+    public void setPresenter(ArticleDetailContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,12 +69,11 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mPresenter.start();
     }
 
-    @Override
-    public void setPresenter(ArticleDetailContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-    // TODO date
+    /**
+     * Show {@param article} in the view.
+     *
+     * @param article   Article to be displayed
+     */
     @Override
     public void showArticle(Article article) {
         Log.d(TAG, "showArticle: url=" + article.getUrl());
@@ -87,6 +90,12 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mContent.setText(Html.fromHtml(article.getContent()));
     }
 
+    /**
+     * Get raw URL for article in the view.
+     *
+     * @return  String: raw url
+     */
+    @Override
     public String getArticleUrl() {
         return mUrlRaw;
     }

@@ -18,17 +18,21 @@ public interface ArticlesContract {
 
         void showNoArticles();
 
-        void setLoadingIndicator(boolean active);
-
         void showArticleDetailsUi(Article article);
+
+        void setLoadingIndicator(boolean active);
 
     }
 
     interface Presenter extends BasePresenter {
 
+        void initiateDownloadService();
+
         void loadArticles();
 
         void openArticleDetails(Article article);
+
+        void onServiceActive(boolean active);
 
     }
 

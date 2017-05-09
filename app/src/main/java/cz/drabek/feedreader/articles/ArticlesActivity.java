@@ -17,7 +17,7 @@ import cz.drabek.feedreader.util.Injection;
 
 public class ArticlesActivity extends AppCompatActivity {
 
-    private ArticlesPresenter mArticlesPresenter;
+    private ArticlesContract.Presenter mArticlesPresenter;
     private ProgressBar mProgressBar;
     private Toolbar mToolbar;
 
@@ -42,7 +42,6 @@ public class ArticlesActivity extends AppCompatActivity {
         }
 
         // Create the presenter
-        // initiate manual download service
         mArticlesPresenter = new ArticlesPresenter(
                 getApplicationContext(),
                 getSupportLoaderManager(),
@@ -51,13 +50,6 @@ public class ArticlesActivity extends AppCompatActivity {
         );
 
         mArticlesPresenter.initiateDownloadService();
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mArticlesPresenter.unbindService();
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.

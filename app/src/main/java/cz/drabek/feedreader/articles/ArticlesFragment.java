@@ -9,21 +9,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.articledetail.ArticleDetailActivity;
 import cz.drabek.feedreader.data.Article;
 
-public class ArticlesFragment extends Fragment
-        implements ArticlesContract.View {
-
-    private final String TAG = "ArticleListFragment";
-    private final int FEED_ENTRY_LOADER = 1;
+public class ArticlesFragment extends Fragment implements ArticlesContract.View {
 
     private ArticlesContract.Presenter mPresenter;
     private ArticlesCursorAdapter mListAdapter;
@@ -36,8 +29,6 @@ public class ArticlesFragment extends Fragment
 
     private LinearLayout mArticlesView;
     private LinearLayout mNoArticlesView;
-    private ImageView mNoArticlesIcon;
-    private TextView mNoArticlesMessage;
 
 
     public ArticlesFragment() {
@@ -63,8 +54,6 @@ public class ArticlesFragment extends Fragment
 
         // Set up no articles view
         mNoArticlesView = (LinearLayout) root.findViewById(R.id.noArticles);
-        mNoArticlesIcon = (ImageView) root.findViewById(R.id.no_articles_icon);
-        mNoArticlesMessage = (TextView) root.findViewById(R.id.no_articles_message);
 
         return root;
     }
@@ -80,12 +69,33 @@ public class ArticlesFragment extends Fragment
         mPresenter = presenter;
     }
 
-    public interface ArticleItemListener {
+    /**
+     * Show article list from the local storage in the view.
+     *
+     * @param articles  Articles to be shown in list
+     */
+    @Override
+    public void showArticles(Cursor articles) {
+        mListAdapter.swapCursor(articles);
 
-        void onArticleClick(Article clickedArticle);
-
+        mArticlesView.setVisibility(View.VISIBLE);
+        mNoArticlesView.setVisibility(View.GONE);
     }
 
+    /**
+     * Show empty screen for no articles available.
+     */
+    @Override
+    public void showNoArticles() {
+        mArticlesView.setVisibility(View.GONE);
+        mNoArticlesView.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Depending on UI, either launch new activity or refresh fragment for the {@param article}
+     * @param article   To be displayed in view.
+     */
+    // TODO tablets UI
     @Override
     public void showArticleDetailsUi(Article article) {
         // in it's own Activity, since it makes more sense that way and it gives us the flexibility
@@ -96,24 +106,15 @@ public class ArticlesFragment extends Fragment
     }
 
     @Override
-    public void showArticles(Cursor articles) {
-        mListAdapter.swapCursor(articles);
-
-        mArticlesView.setVisibility(View.VISIBLE);
-        mNoArticlesView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showNoArticles() {
-        mArticlesView.setVisibility(View.GONE);
-        mNoArticlesView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
     public void setLoadingIndicator(boolean active) {
         if (getView() == null)
             return;
 
         ((ArticlesActivity) getActivity()).setLoadingIndicator(active);
+    }
+
+    // Interface for handling callbacks when article in list is clicked.
+    public interface ArticleItemListener {
+        void onArticleClick(Article clickedArticle);
     }
 }

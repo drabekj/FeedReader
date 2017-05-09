@@ -16,6 +16,8 @@ public interface ArticleDetailContract {
 
         void showArticle(Article article);
 
+        String getArticleUrl();
+
     }
 
     interface Presenter extends BasePresenter {

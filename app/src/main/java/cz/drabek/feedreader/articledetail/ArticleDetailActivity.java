@@ -17,7 +17,6 @@ import cz.drabek.feedreader.util.Injection;
 public class ArticleDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_ARTICLE_ID = "ARTICLE_ID";
-    private ArticleDetailPresenter mPresenter;
     private ArticleDetailFragment mFragment;
 
     @Override
@@ -30,6 +29,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
         int articleId = getIntent().getIntExtra(EXTRA_ARTICLE_ID, 0);
 
+        // Set up fragment
         mFragment = (ArticleDetailFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         if (mFragment == null) {
@@ -38,7 +38,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
         }
 
         // Create the presenter
-        mPresenter = new ArticleDetailPresenter(
+        new ArticleDetailPresenter(
                 getApplicationContext(),
                 articleId,
                 getSupportLoaderManager(),
@@ -47,14 +47,13 @@ public class ArticleDetailActivity extends AppCompatActivity {
         );
     }
 
-    // Inflate the menu; this adds items to the action bar if it is present.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_article_detail_menu, menu);
         return true;
     }
 
-    // TODO better getArticleUrl()
+    // TODO better getArticleUrl() - dont want to need mFragment => (intent extra) change from ID to URL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
