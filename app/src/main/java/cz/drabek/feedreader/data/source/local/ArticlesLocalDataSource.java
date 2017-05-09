@@ -43,8 +43,15 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
     public void getArticle(@NonNull int articleId, @NonNull GetArticleCallback callback) {
         Uri uri = Uri.withAppendedPath(ArticlesContentProvider.CONTENT_ARTICLES_URI, String.valueOf(articleId));
 
-        Cursor cursor = mContentResolver.query(uri, null, null, null, null);
-        cursor.moveToFirst();
+        Cursor cursor = null;
+        try {
+            cursor = mContentResolver.query(uri, null, null, null, null);
+        } catch (Exception e) {
+            callback.onDataNotAvailable();
+            return;
+        }
+        if (cursor == null || !cursor.moveToFirst())
+            callback.onDataNotAvailable();
         callback.onArticleLoaded(Article.from(cursor));
     }
 

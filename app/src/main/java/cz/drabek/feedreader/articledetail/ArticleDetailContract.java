@@ -16,11 +16,15 @@ public interface ArticleDetailContract {
 
         void showArticle(Article article);
 
+        void showNoArticle();
+
         String getArticleUrl();
 
     }
 
     interface Presenter extends BasePresenter {
+
+        void setArticleId(int id);
 
     }
 

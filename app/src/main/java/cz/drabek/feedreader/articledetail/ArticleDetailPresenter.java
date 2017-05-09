@@ -20,23 +20,30 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
     public final static int ARTICLE_LOADER = 2;
 
     private Context mContext;
-    private int mArticleId;
+    private int mArticleId = -1;
     private LoaderManager mLoaderManager;
     private ArticlesRepository mArticlesRepository;
     private ArticleDetailContract.View mView;
 
     public ArticleDetailPresenter(@NonNull Context context,
-                                  @NonNull int articleId,
                                   @NonNull LoaderManager loaderManager,
                                   @NonNull ArticlesRepository articlesRepository,
                                   @NonNull ArticleDetailContract.View view) {
         mContext = context;
-        mArticleId = articleId;
         mLoaderManager = loaderManager;
         mArticlesRepository = articlesRepository;
         mView = view;
 
         mView.setPresenter(this);
+    }
+
+    /**
+     * Set the ID of the article to be displayed.
+     *
+     * @param id ID of the article to be displayed
+     */
+    public void setArticleId(int id) {
+        mArticleId = id;
     }
 
     @Override
@@ -59,6 +66,11 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
     @Override
     public void onArticleLoaded(Article article) {
         mLoaderManager.initLoader(ARTICLE_LOADER, null, this);
+    }
+
+    @Override
+    public void onDataNotAvailable() {
+        mView.showNoArticle();
     }
 
     @Override
@@ -96,9 +108,5 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
         Article article = Article.from(data);
         mView.showArticle(article);
     }
-
-    // TODO - low priority
-    @Override
-    public void onDataNotAvailable() { }
 
 }

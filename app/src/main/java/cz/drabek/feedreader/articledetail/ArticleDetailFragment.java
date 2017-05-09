@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cz.drabek.feedreader.R;
@@ -24,6 +25,8 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
 
     ArticleDetailContract.Presenter mPresenter;
 
+    private LinearLayout mDetailView;
+    private LinearLayout mNoDetailView;
     private TextView mTitle;
     private TextView mDate;
     private TextView mAuthor;
@@ -35,13 +38,8 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
     public ArticleDetailFragment() {
         // Required empty public constructor
     }
-
-    public static ArticleDetailFragment newInstance(@Nullable int articleId) {
-        Bundle arguments = new Bundle();
-        arguments.putInt(ARGUMENT_ARTICLE_ID, articleId);
-        ArticleDetailFragment fragment = new ArticleDetailFragment();
-        fragment.setArguments(arguments);
-        return fragment;
+    public static ArticleDetailFragment newInstance() {
+        return new ArticleDetailFragment();
     }
 
     @Override
@@ -59,6 +57,9 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mAuthor = (TextView) root.findViewById(R.id.article_detail_author);
         mUrl    = (TextView) root.findViewById(R.id.article_detail_url_link);
         mContent= (TextView) root.findViewById(R.id.article_detail_content);
+
+        mDetailView     = (LinearLayout) root.findViewById(R.id.detailLayout);
+        mNoDetailView   = (LinearLayout) root.findViewById(R.id.noDetailLayout);
 
         return root;
     }
@@ -88,6 +89,18 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mUrl    .setMovementMethod(LinkMovementMethod.getInstance());
         mUrl    .setText(Html.fromHtml(urlString));
         mContent.setText(Html.fromHtml(article.getContent()));
+
+        mDetailView  .setVisibility(View.VISIBLE);
+        mNoDetailView.setVisibility(View.GONE);
+    }
+
+    /**
+     * Show empty screen in view.
+     */
+    @Override
+    public void showNoArticle() {
+        mDetailView  .setVisibility(View.GONE);
+        mNoDetailView.setVisibility(View.VISIBLE);
     }
 
     /**

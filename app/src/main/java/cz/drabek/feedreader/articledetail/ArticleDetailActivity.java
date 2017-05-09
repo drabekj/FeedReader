@@ -33,18 +33,18 @@ public class ArticleDetailActivity extends AppCompatActivity {
         mFragment = (ArticleDetailFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
         if (mFragment == null) {
-            mFragment = ArticleDetailFragment.newInstance(articleId);
+            mFragment = ArticleDetailFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mFragment, R.id.contentFrame);
         }
 
         // Create the presenter
-        new ArticleDetailPresenter(
+        ArticleDetailContract.Presenter presenter = new ArticleDetailPresenter(
                 getApplicationContext(),
-                articleId,
                 getSupportLoaderManager(),
                 Injection.provideTasksRepository(this),
                 mFragment
         );
+        presenter.setArticleId(articleId);
     }
 
     @Override

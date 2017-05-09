@@ -13,7 +13,7 @@ import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
 
 public class ArticlesRepository implements ArticlesDataSource {
 
-    public final String TAG = "ArticlesRepository";
+    public final String TAG = "HONZA-ArticlesRep";
 
     public static ArticlesRepository INSTANCE = null;
     private final ArticlesDataSource mArticlesRemoteDataSource;
@@ -80,7 +80,7 @@ public class ArticlesRepository implements ArticlesDataSource {
     public void saveArticle(@NonNull Article article) { }
 
     @Override
-    public void getArticle(@NonNull int articleId, @NonNull final GetArticleCallback callback) {
+    public void getArticle(@NonNull final int articleId, @NonNull final GetArticleCallback callback) {
         // Get data from local storage
         mArticlesLocalDataSource.getArticle(articleId, new GetArticleCallback() {
             @Override
@@ -89,7 +89,10 @@ public class ArticlesRepository implements ArticlesDataSource {
             }
 
             @Override
-            public void onDataNotAvailable() { }
+            public void onDataNotAvailable() {
+                Log.e(TAG, "onDataNotAvailable: id=" + articleId);
+                callback.onDataNotAvailable();
+            }
         });
     }
 

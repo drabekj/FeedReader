@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -8,45 +9,83 @@
               android:paddingTop="@dimen/list_item_padding"
               android:paddingBottom="@dimen/list_item_padding">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/article_detail_title"
-        android:textSize="24sp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="match_parent"
+        android:id="@+id/detailContainer">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/detailLayout">
 
-        <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_detail_title"
+                android:textSize="24sp"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/article_detail_date"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/by"
+                    android:id="@+id/article_detail_by"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/article_detail_author"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_full_article"
+                android:id="@+id/article_detail_url_link"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/article_detail_content"/>
+
+        </LinearLayout>
+
+        <!--EMPTY SCREEN-->
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/article_detail_date"/>
+            android:layout_centerInParent="true"
+            android:id="@+id/noDetailLayout">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/by"
-            android:id="@+id/article_detail_by"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/presence_busy"
+                android:id="@+id/no_detail_icon"
+                android:contentDescription="@string/no_detail_image_desc"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/article_detail_author"/>
+            <TextView
+                android:text="@string/no_detail_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/no_detail_message"/>
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/view_full_article"
-        android:id="@+id/article_detail_url_link"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/article_detail_content"/>
+    </RelativeLayout>
 
 </LinearLayout>
