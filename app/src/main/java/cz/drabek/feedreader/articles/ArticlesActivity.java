@@ -33,12 +33,12 @@ public class ArticlesActivity extends AppCompatActivity {
 
         // Set up Articles Fragment
         ArticlesFragment articlesFragment =
-                (ArticlesFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+                (ArticlesFragment) getSupportFragmentManager().findFragmentById(R.id.articlesContentFrame);
 
         if (articlesFragment == null) {
             // Create the fragment
             articlesFragment = ArticlesFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), articlesFragment, R.id.contentFrame);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), articlesFragment, R.id.articlesContentFrame);
         }
 
         // Create the presenter

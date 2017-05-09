@@ -24,10 +24,23 @@
             android:visibility="invisible" />
     </android.support.v7.widget.Toolbar>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/articlesContentFrame"
-        tools:layout="@layout/articles_frag" />
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:id="@+id/articlesContentFrame"
+            tools:layout="@layout/articles_frag" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/detailContentFrame"
+            tools:layout="@layout/articledetail_frag" />
+
+    </LinearLayout>
 
 </LinearLayout>
