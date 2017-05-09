@@ -60,8 +60,6 @@ public class ArticlesActivity extends AppCompatActivity {
             setupDetailFrag();
         }
 
-
-
         mArticlesPresenter.initiateDownloadService();
     }
 
@@ -85,7 +83,7 @@ public class ArticlesActivity extends AppCompatActivity {
                 detailFragment
         );
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
