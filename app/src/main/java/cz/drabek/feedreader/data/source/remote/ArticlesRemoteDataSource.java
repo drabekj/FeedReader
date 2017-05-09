@@ -41,7 +41,11 @@ public class ArticlesRemoteDataSource implements ArticlesDataSource {
     }
 
     @Override
-    public void downloadArticles(@NonNull List<Feed> feeds, @NonNull DownloadArticlesCallback callback) {
+    synchronized public void downloadArticles(@NonNull List<Feed> feeds, @NonNull DownloadArticlesCallback callback) {
+        feeds = new ArrayList<>(2);
+        feeds.add(new Feed("The Verge", "https://www.theverge.com/rss/index.xml"));
+        feeds.add(new Feed("Technet", "http://servis.idnes.cz/rss.aspx?c=technet"));
+
         try {
             download(feeds);
         } catch (IOException e) {

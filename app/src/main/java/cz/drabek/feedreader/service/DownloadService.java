@@ -44,8 +44,6 @@ public class DownloadService extends Service {
      * Target we publish for clients to send messages to IncomingHandler.
      */
     final Messenger mMessenger = new Messenger(new IncomingHandler());
-    private Thread mThread;
-
 
     /**
      * Handler of incoming messages from clients.
@@ -72,10 +70,10 @@ public class DownloadService extends Service {
                 case MSG_SAY_HELLO:
                     Toast.makeText(getApplicationContext(), "hello!", Toast.LENGTH_SHORT).show();
                     break;
-                case MSG_IS_WORKING:
-                    mValue =  isWorking() ? 1 : 0;
-                    sendMsg(Message.obtain(null, MSG_IS_WORKING, mValue, 0));
-                    break;
+//                case MSG_IS_WORKING:
+//                    mValue =  isWorking() ? 1 : 0;
+//                    sendMsg(Message.obtain(null, MSG_IS_WORKING, mValue, 0));
+//                    break;
                 default:
                     super.handleMessage(msg);
             }
@@ -108,6 +106,10 @@ public class DownloadService extends Service {
         return mMessenger.getBinder();
     }
 
+    @Override
+    public void onCreate() {
+        startDownload();
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -117,8 +119,8 @@ public class DownloadService extends Service {
 
     private void startDownload() {
         Runnable r = new DownloadingRunnable();
-        mThread = new Thread(r);
-        mThread.start();
+        Thread thread = new Thread(r);
+        thread.start();
     }
 
 
@@ -129,7 +131,6 @@ public class DownloadService extends Service {
             ArticlesRepository repository = Injection.provideTasksRepository(getApplicationContext());
             repository.getArticles(this);
 
-            SystemClock.sleep(5000);
             int value = 1;
             sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, value, 0));
             Log.w("HONZA", "startDownload run: Service finished - articles downloaded");
@@ -142,7 +143,7 @@ public class DownloadService extends Service {
         public void onDataNotAvailable() { }
     }
 
-    private boolean isWorking() {
-        return mThread.isAlive();
-    }
+//    private boolean isWorking() {
+//        return mThread.isAlive();
+//    }
 }

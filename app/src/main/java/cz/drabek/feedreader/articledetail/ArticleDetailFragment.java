@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import cz.drabek.feedreader.R;
 import cz.drabek.feedreader.data.Article;
 
 public class ArticleDetailFragment extends Fragment implements ArticleDetailContract.View {
+
+    private static final String TAG = "HONZA-ArticleDetailFrag";
 
     @NonNull
     private static final String ARGUMENT_ARTICLE_ID = "ARTICLE_ID";
@@ -70,6 +73,7 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
     // TODO date
     @Override
     public void showArticle(Article article) {
+        Log.d(TAG, "showArticle: url=" + article.getUrl());
         mUrlRaw = article.getUrl();
         String urlString = "<a href='" + mUrlRaw + "'> "
                 + getResources().getString(R.string.view_full_article) + " </a>";

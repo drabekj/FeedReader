@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import cz.drabek.feedreader.data.source.ArticlesDataSource;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
 import cz.drabek.feedreader.data.source.local.ArticlesLocalDataSource;
+import cz.drabek.feedreader.data.source.remote.ArticlesRemoteDataSource;
 import cz.drabek.feedreader.data.source.remote.FakeArticlesRemoteDataSource;
 
 import static cz.drabek.feedreader.util.Preconditions.checkNotNull;
@@ -25,6 +26,10 @@ public class Injection {
     }
 
     public static ArticlesDataSource provideRemoteDataSource() {
+        return ArticlesRemoteDataSource.getInstance();
+    }
+
+    public static ArticlesDataSource provideMockRemoteDataSource() {
         return FakeArticlesRemoteDataSource.getInstance();
     }
 

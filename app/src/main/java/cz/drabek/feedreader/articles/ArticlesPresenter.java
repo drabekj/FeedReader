@@ -62,9 +62,6 @@ public class ArticlesPresenter implements
     public void loadArticles() {
         // start service here => loads articles to DB
         mServiceBinder.startService();
-
-//        mArticlesView.setLoadingIndicator(true);
-//        mArticlesRepository.getArticles(this);
     }
 
     public Context getContext() {
@@ -155,6 +152,10 @@ public class ArticlesPresenter implements
     public void onServiceActive(boolean active) {
         onArticlesLoaded(null);
         mArticlesView.setLoadingIndicator(active);
+    }
+
+    public void unbindService() {
+        mServiceBinder.doUnbindService();
     }
 
 }

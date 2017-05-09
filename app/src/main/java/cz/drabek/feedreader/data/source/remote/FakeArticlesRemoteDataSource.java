@@ -1,5 +1,6 @@
 package cz.drabek.feedreader.data.source.remote;
 
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ public class FakeArticlesRemoteDataSource implements ArticlesDataSource {
 
     @Override
     public void downloadArticles(@NonNull List<Feed> feeds, @NonNull DownloadArticlesCallback callback) {
+        // fake data loading
+        SystemClock.sleep(5000);
+
         if (list.isEmpty())
             callback.onDataNotAvailable();
         else
