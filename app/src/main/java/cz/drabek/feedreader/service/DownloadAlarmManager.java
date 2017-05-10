@@ -7,7 +7,7 @@ import android.content.Intent;
 
 public class DownloadAlarmManager {
 
-    public static final long DOWNLOAD_INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES / (15 * 6);
+    public static final long DOWNLOAD_INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15;
 
     public static void setAlarm(Context context) {
         // initiate repeating download service
