@@ -34,6 +34,8 @@ public interface ArticlesContract {
 
         void onServiceActive(boolean active);
 
+        void refreshArticles();
+
     }
 
 }

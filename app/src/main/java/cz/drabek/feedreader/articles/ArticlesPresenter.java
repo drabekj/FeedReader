@@ -86,7 +86,10 @@ public class ArticlesPresenter implements
      */
     @Override
     public void onArticlesLoaded(List<Article> articles) {
-        // we don't care about the result since the CursorLoader will load the data for us
+        refreshArticles();
+    }
+
+    public void refreshArticles() {
         if (mLoaderManager.getLoader(ARTICLES_LOADER) == null)
             mLoaderManager.initLoader(ARTICLES_LOADER, null, this);
         else
@@ -120,7 +123,7 @@ public class ArticlesPresenter implements
     @Override
     public void onServiceActive(boolean active) {
         if (!active)
-            onArticlesLoaded(null);
+            refreshArticles();
         mArticlesView.setLoadingIndicator(active);
     }
 

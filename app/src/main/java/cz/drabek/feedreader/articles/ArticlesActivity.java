@@ -62,6 +62,7 @@ public class ArticlesActivity extends AppCompatActivity {
         }
 
         mArticlesPresenter.initiateDownloadService();
+        mArticlesPresenter.refreshArticles();
     }
 
     // TODO - handle detailFragment.newInstance(int ID) => not necessary id
