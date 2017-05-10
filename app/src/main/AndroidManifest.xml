@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -21,6 +22,13 @@
         <activity android:name=".articledetail.ArticleDetailActivity"/>
         <service android:name=".service.DownloadService" android:enabled="true"/>
         <receiver android:name=".service.DownloadBroadCastReceiver"/>
+        <receiver
+            android:name=".service.BootBroadcastReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <provider
             android:name=".data.source.local.ArticlesContentProvider"
             android:authorities="cz.drabek.feedreader"
