@@ -1,5 +1,6 @@
 package cz.drabek.feedreader.articledetail;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cz.drabek.feedreader.R;
+import cz.drabek.feedreader.articles.ArticlesPresenter;
 import cz.drabek.feedreader.data.Article;
 
 public class ArticleDetailFragment extends Fragment implements ArticleDetailContract.View {
@@ -61,8 +63,11 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mDetailView     = (LinearLayout) root.findViewById(R.id.detailLayout);
         mNoDetailView   = (LinearLayout) root.findViewById(R.id.noDetailLayout);
 
+        setRetainInstance(true);
         return root;
     }
+
+
 
     @Override
     public void onResume() {

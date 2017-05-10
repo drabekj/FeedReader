@@ -94,6 +94,7 @@ public class ArticlesContentProvider extends ContentProvider {
                 );
                 break;
             default:
+//                return nu;
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 

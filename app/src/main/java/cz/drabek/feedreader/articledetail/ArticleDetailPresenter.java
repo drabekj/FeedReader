@@ -65,8 +65,10 @@ public class ArticleDetailPresenter implements ArticleDetailContract.Presenter,
      */
     @Override
     public void onArticleLoaded(Article article) {
-        mLoaderManager.restartLoader(ARTICLE_LOADER, null, this);
-//        mLoaderManager.initLoader(ARTICLE_LOADER, null, this);
+        if (mLoaderManager.getLoader(ARTICLE_LOADER) == null)
+            mLoaderManager.initLoader(ARTICLE_LOADER, null, this);
+        else
+            mLoaderManager.restartLoader(ARTICLE_LOADER, null, this);
     }
 
     @Override

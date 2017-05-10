@@ -50,7 +50,7 @@ public class ArticlesLocalDataSource implements ArticlesDataSource {
             callback.onDataNotAvailable();
             return;
         }
-        if (cursor == null || !cursor.moveToFirst())
+        if (cursor == null || !cursor.moveToLast())
             callback.onDataNotAvailable();
         callback.onArticleLoaded(Article.from(cursor));
     }

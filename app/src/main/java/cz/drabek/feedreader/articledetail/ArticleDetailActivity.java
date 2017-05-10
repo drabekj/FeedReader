@@ -1,6 +1,7 @@
 package cz.drabek.feedreader.articledetail;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import cz.drabek.feedreader.R;
+import cz.drabek.feedreader.articles.ArticlesPresenter;
 import cz.drabek.feedreader.util.ActivityUtils;
 import cz.drabek.feedreader.util.Injection;
 

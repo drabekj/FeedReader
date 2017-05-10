@@ -1,6 +1,7 @@
 package cz.drabek.feedreader.articles;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,8 +21,8 @@ import cz.drabek.feedreader.util.Injection;
 
 public class ArticlesActivity extends AppCompatActivity {
 
-    private ArticlesContract.Presenter mArticlesPresenter;
-    private ArticleDetailContract.Presenter mDetailPresenter;
+    private ArticlesPresenter mArticlesPresenter;
+    private ArticleDetailPresenter mDetailPresenter;
     private ProgressBar mProgressBar;
     private Toolbar mToolbar;
     private boolean isTablet = false;

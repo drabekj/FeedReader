@@ -5,8 +5,8 @@
               android:layout_height="wrap_content"
               android:clickable="true"
               android:background="?attr/selectableItemBackground"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingLeft="@dimen/list_item_padding"
+              android:paddingRight="@dimen/list_item_padding"
               android:paddingTop="@dimen/list_item_padding"
               android:paddingBottom="@dimen/list_item_padding">
 

@@ -59,6 +59,7 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
         // Set up no articles view
         mNoArticlesView = (LinearLayout) root.findViewById(R.id.noArticles);
 
+        setRetainInstance(true);
         return root;
     }
 
