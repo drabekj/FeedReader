@@ -18,6 +18,7 @@ import java.util.List;
 import cz.drabek.feedreader.data.Article;
 import cz.drabek.feedreader.data.source.local.ArticlesContentProvider;
 import cz.drabek.feedreader.data.source.ArticlesRepository;
+import cz.drabek.feedreader.service.DownloadAlarmManager;
 import cz.drabek.feedreader.service.DownloadBroadCastReceiver;
 import cz.drabek.feedreader.util.ClientToServiceBinder;
 
@@ -29,7 +30,6 @@ public class ArticlesPresenter implements
 
     private final static String TAG = "HONZA-ArticlesPresenter";
     public final static int ARTICLES_LOADER = 1;
-    private static final long DOWNLOAD_INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES / (15 * 6);
 
     private Context mContext;
     private LoaderManager mLoaderManager;
@@ -60,10 +60,7 @@ public class ArticlesPresenter implements
         mServiceBinder.doBindService();
 
         // initiate repeating download service
-        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        Intent launchIntent = new Intent(mContext, DownloadBroadCastReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, launchIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), DOWNLOAD_INTERVAL, pi);
+        DownloadAlarmManager.setAlarm(mContext);
     }
 
     @Override
