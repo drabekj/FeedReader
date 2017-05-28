@@ -43,6 +43,12 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
         return new ArticlesFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -59,7 +65,6 @@ public class ArticlesFragment extends Fragment implements ArticlesContract.View 
         // Set up no articles view
         mNoArticlesView = (LinearLayout) root.findViewById(R.id.noArticles);
 
-        setRetainInstance(true);
         return root;
     }
 

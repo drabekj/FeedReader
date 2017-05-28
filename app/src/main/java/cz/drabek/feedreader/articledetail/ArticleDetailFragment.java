@@ -49,6 +49,12 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mPresenter = presenter;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +69,6 @@ public class ArticleDetailFragment extends Fragment implements ArticleDetailCont
         mDetailView     = (LinearLayout) root.findViewById(R.id.detailLayout);
         mNoDetailView   = (LinearLayout) root.findViewById(R.id.noDetailLayout);
 
-        setRetainInstance(true);
         return root;
     }
 
