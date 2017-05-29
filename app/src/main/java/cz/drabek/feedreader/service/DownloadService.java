@@ -3,6 +3,7 @@ package cz.drabek.feedreader.service;
 import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -133,4 +134,32 @@ public class DownloadService extends Service {
         public void onDataNotAvailable() { }
     }
 
+    private class DownloadArticlesTask extends AsyncTask<Void, Boolean, Void>
+            implements ArticlesDataSource.LoadArticlesCallback {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_STARTED, 1, 0));
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ArticlesRepository repository = Injection.provideTasksRepository(getApplicationContext());
+            repository.getArticles(this);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, 1, 0));
+        }
+
+        // implemented in ArticlesRepository - getArticles()
+        @Override
+        public void onArticlesLoaded(List<Article> articles) { }
+        @Override
+        public void onDataNotAvailable() { }
+    }
 }
