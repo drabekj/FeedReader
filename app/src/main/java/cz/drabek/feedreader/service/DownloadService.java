@@ -35,7 +35,7 @@ public class DownloadService extends Service {
     public static final int MSG_SET_VALUE = 3;
     public static final int MSG_START_SERVICE = 4;
 
-    List<Messenger> mClients = new ArrayList<Messenger>();
+    List<Messenger> mClients = new ArrayList<>();
     /** Holds last value set by a client. */
     int mValue = 0;
 
