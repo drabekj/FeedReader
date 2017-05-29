@@ -23,6 +23,11 @@ public class FeedsCursorAdapter extends CursorAdapter {
             mName = (TextView) view.findViewById(R.id.feed_item_name);
             mUrl = (TextView) view.findViewById(R.id.feed_item_url);
         }
+
+        public void setNewContent(Feed newFeed) {
+            mName.setText(newFeed.getName());
+            mUrl.setText(newFeed.getUrl());
+        }
     }
 
     public FeedsCursorAdapter(Context context, FeedFragment.FeedItemListener feedItemListener) {
@@ -45,8 +50,7 @@ public class FeedsCursorAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         final Feed feed = Feed.from(cursor);
-        viewHolder.mName.setText(feed.getName());
-        viewHolder.mUrl.setText(feed.getUrl());
+        viewHolder.setNewContent(feed);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
