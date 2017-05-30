@@ -1,22 +1,17 @@
 package cz.drabek.feedreader.service;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.os.SystemClock;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import cz.drabek.feedreader.data.Article;
