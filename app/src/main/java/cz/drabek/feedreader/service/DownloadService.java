@@ -30,6 +30,7 @@ public class DownloadService extends Service {
     public static final int MSG_SET_VALUE = 3;
     public static final int MSG_START_SERVICE = 4;
 
+    DownloadArticlesTask mDownloadTask;
     List<Messenger> mClients = new ArrayList<>();
     /** Holds last value set by a client. */
     int mValue = 0;
@@ -105,28 +106,10 @@ public class DownloadService extends Service {
     }
 
     private void startDownload() {
-        Runnable r = new DownloadingRunnable();
-        Thread thread = new Thread(r);
-        thread.start();
-    }
-
-
-    class DownloadingRunnable implements Runnable, ArticlesDataSource.LoadArticlesCallback {
-        @Override
-        public void run() {
-            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_STARTED, 1, 0));
-
-            ArticlesRepository repository = Injection.provideTasksRepository(getApplicationContext());
-            repository.getArticles(this);
-
-            sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, 1, 0));
+        if (mDownloadTask == null || mDownloadTask.getStatus() == AsyncTask.Status.FINISHED) {
+            mDownloadTask = new DownloadArticlesTask();
+            mDownloadTask.execute();
         }
-
-        // implemented in ArticlesRepository - getArticles()
-        @Override
-        public void onArticlesLoaded(List<Article> articles) { }
-        @Override
-        public void onDataNotAvailable() { }
     }
 
     private class DownloadArticlesTask extends AsyncTask<Void, Boolean, Void>
