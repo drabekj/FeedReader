@@ -133,6 +133,7 @@ public class DownloadService extends Service {
         protected void onPostExecute(Void aVoid) {
             Log.d(TAG, "onPostExecute: finished articles download");
             sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, 1, 0));
+            DownloadWakeLockHelper.release();
             stopSelf();
         }
 
