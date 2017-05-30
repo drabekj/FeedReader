@@ -117,12 +117,13 @@ public class DownloadService extends Service {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
+            Log.d(TAG, "onPreExecute: starting articles download");
             sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_STARTED, 1, 0));
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.d(TAG, "doInBackground: downloading articles");
             ArticlesRepository repository = Injection.provideTasksRepository(getApplicationContext());
             repository.getArticles(this);
             return null;
@@ -130,7 +131,7 @@ public class DownloadService extends Service {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+            Log.d(TAG, "onPostExecute: finished articles download");
             sendMsg(Message.obtain(null, ClientToServiceBinder.MSG_LOAD_FINISHED, 1, 0));
         }
 
